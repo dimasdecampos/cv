@@ -13,8 +13,8 @@ export function Portfolio() {
   return (
     <Section
       id="portfolio"
-      eyebrow="04 · Portfólio"
-      title="Projetos selecionados"
+      eyebrow="Portfólio"
+      title="Portfólio de dashboards Power BI"
       intro="Dashboards, componentes em SVG e interfaces web. Clique em um projeto para ampliar."
       className="no-print"
       aside={
@@ -48,7 +48,7 @@ export function Portfolio() {
             <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface-2">
               <img
                 src={p.image}
-                alt=""
+                alt={`${p.title}: ${p.label}, projeto de Dimas de Campos`}
                 loading="lazy"
                 decoding="async"
                 className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"

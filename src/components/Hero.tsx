@@ -29,18 +29,23 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
             </span>
-            {PROFILE.role} na levva
+            Disponível para projetos freelancer
           </p>
 
-          <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] text-fg sm:text-6xl">
-            Transformo dados em <span className="text-gradient">decisões claras</span> e dashboards que as pessoas
-            querem usar.
+          <h1 className="mt-6 text-fg">
+            <span className="block font-sans text-base font-semibold tracking-normal text-accent sm:text-lg">
+              {PROFILE.name} · Analista de Dados Sênior e Especialista em Power BI
+            </span>
+            <span className="mt-3 block text-4xl font-extrabold leading-[1.05] sm:text-5xl xl:text-[3.5rem]">
+              Transformo dados em <span className="text-gradient">decisões claras</span> e dashboards que as pessoas
+              querem usar.
+            </span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-            Sou <strong className="font-semibold text-fg">{PROFILE.name}</strong>. Há mais de {yearsLabel.replace('+', '')}{' '}
-            anos uno engenharia de dados (SQL, ETL, DAX, M) e design de interfaces para entregar BI rápido, confiável e
-            bonito.
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted" suppressHydrationWarning>
+            Sou {PROFILE.role} na levva e atendo empresas como <strong className="font-semibold text-fg">freelancer</strong>.
+            Há mais de {yearsLabel.replace('+', '')} anos uno engenharia de dados (SQL, ETL, DAX, M) e design de interfaces
+            para entregar BI rápido, confiável e bonito.
           </p>
 
           <div className="no-print mt-8 flex flex-wrap gap-3">
@@ -62,7 +67,9 @@ export function Hero() {
             {STATS.map((s) => (
               <div key={s.label}>
                 <dt className="sr-only">{s.label}</dt>
-                <dd className="font-display text-3xl font-bold tabular-nums text-fg">{s.value}</dd>
+                <dd className="font-display text-3xl font-bold tabular-nums text-fg" suppressHydrationWarning>
+                  {s.value}
+                </dd>
                 <dd className="mt-1 text-xs text-subtle">{s.label}</dd>
               </div>
             ))}
@@ -75,7 +82,7 @@ export function Hero() {
             <div className="relative aspect-square overflow-hidden rounded-2xl bg-surface-2">
               <img
                 src={PROFILE.photo}
-                alt={`Foto de ${PROFILE.name}`}
+                alt={`${PROFILE.name}, analista de dados sênior e especialista em Power BI`}
                 width={664}
                 height={664}
                 className="h-full w-full object-cover"

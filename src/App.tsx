@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { Contact } from './components/Contact';
+import { Faq, Services } from './components/Freelance';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Portfolio } from './components/Portfolio';
@@ -20,10 +21,12 @@ export default function App() {
       <main id="conteudo">
         <Hero />
         <About />
+        <Services />
         <Experience />
         <Skills />
         <Portfolio />
         <Education />
+        <Faq />
         <Contact />
       </main>
       <Footer />
@@ -36,7 +39,7 @@ function Footer() {
   return (
     <footer className="border-t border-line py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-sm text-subtle sm:flex-row sm:px-6">
-        <p>
+        <p suppressHydrationWarning>
           © {new Date().getFullYear()} <span className="font-semibold text-fg">{PROFILE.name}</span> · {PROFILE.location}
         </p>
         <nav className="no-print flex gap-5" aria-label="Redes sociais">

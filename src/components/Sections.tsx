@@ -7,7 +7,7 @@ export function About() {
   return (
     <Section
       id="sobre"
-      eyebrow="01 · Sobre"
+      eyebrow="Sobre"
       title="Rigor analítico com design centrado em quem lê o dado"
       intro="Muito dashboard é tecnicamente sólido mas difícil de ler, ou bonito mas impreciso. Meu trabalho junta os dois lados: modelos dimensionais com DAX otimizado e uma interface que faz o executivo entender o número em segundos."
     >
@@ -37,10 +37,9 @@ export function Experience() {
   return (
     <Section
       id="experiencia"
-      eyebrow="02 · Trajetória"
-      title="Experiência profissional"
-      intro="Mais de uma década construindo BI em logística, meios de pagamento e engenharia."
-      className="bg-surface-2/50"
+      eyebrow="Trajetória"
+      title="Experiência como analista de dados e BI"
+      intro="Mais de uma década como analista de BI e Power BI em logística, meios de pagamento e engenharia."
     >
       <ol className="relative space-y-6 before:absolute before:bottom-4 before:left-[19px] before:top-4 before:w-px before:bg-line sm:before:left-[23px]">
         {EXPERIENCE.map((job, i) => {
@@ -74,7 +73,7 @@ export function Experience() {
                     <p className="font-mono text-xs tabular-nums text-muted">
                       {formatMonth(job.start)} – {job.end ? formatMonth(job.end) : 'hoje'}
                     </p>
-                    <p className="font-mono text-xs text-subtle">
+                    <p className="font-mono text-xs text-subtle" suppressHydrationWarning>
                       {i === EXPERIENCE.length - 1 ? job.location : `${formatDuration(job.start, job.end)} · ${job.location}`}
                     </p>
                   </div>
@@ -113,9 +112,10 @@ export function Skills() {
   return (
     <Section
       id="habilidades"
-      eyebrow="03 · Habilidades"
-      title="Ferramentas e competências"
+      eyebrow="Habilidades"
+      title="Competências em Power BI, SQL e dados"
       intro="Nível de domínio em cada ferramenta, do dado bruto à interface."
+      className="bg-surface-2/50"
       aside={
         <div className="flex gap-4 text-xs text-subtle" aria-hidden="true">
           {(Object.keys(LEVEL_DOTS) as Level[]).map((l) => (
@@ -169,7 +169,7 @@ function Dots({ n }: { n: number }) {
 
 export function Education() {
   return (
-    <Section id="formacao" eyebrow="05 · Formação" title="Educação" className="bg-surface-2/50">
+    <Section id="formacao" eyebrow="Formação" title="Formação acadêmica" className="bg-surface-2/50">
       <div className="grid gap-4 md:grid-cols-2">
         {EDUCATION.map((e, i) => {
           const Icon = i === 0 ? GraduationCap : School;

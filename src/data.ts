@@ -25,12 +25,69 @@ export const whatsappLink = (text?: string) =>
 
 export const NAV = [
   { id: 'sobre', label: 'Sobre' },
+  { id: 'servicos', label: 'Freelancer' },
   { id: 'experiencia', label: 'Experiência' },
   { id: 'habilidades', label: 'Habilidades' },
   { id: 'portfolio', label: 'Portfólio' },
-  { id: 'formacao', label: 'Formação' },
   { id: 'contato', label: 'Contato' },
 ] as const;
+
+// Serviços oferecidos como freelancer (também vão para os dados estruturados do Google)
+export const SERVICES = [
+  {
+    icon: 'chart',
+    title: 'Dashboards em Power BI',
+    text: 'Criação de dashboards e relatórios do zero: levantamento de KPIs, modelagem, DAX, layout e publicação no Power BI Service.',
+  },
+  {
+    icon: 'zap',
+    title: 'Otimização de DAX e modelos',
+    text: 'Relatório lento ou com números estranhos? Reviso o modelo de dados, as medidas DAX e as atualizações para ganhar performance e confiança.',
+  },
+  {
+    icon: 'database',
+    title: 'ETL, SQL e integração de dados',
+    text: 'Consultas SQL, Power Query (M) e Dataflows para juntar fontes como SQL Server, Excel e CSV em uma base única e confiável.',
+  },
+  {
+    icon: 'palette',
+    title: 'Redesign UI/UX de relatórios',
+    text: 'Transformo relatórios confusos em painéis claros, com design system, ícones SVG, temas e navegação pensada para quem decide.',
+  },
+  {
+    icon: 'sheet',
+    title: 'Do Excel para o Power BI',
+    text: 'Migração de planilhas e relatórios manuais para dashboards automatizados, com atualização agendada e menos retrabalho.',
+  },
+  {
+    icon: 'users',
+    title: 'Consultoria e mentoria',
+    text: 'Apoio a times de dados e analistas: boas práticas de modelagem, DAX, governança de BI e revisão de projetos.',
+  },
+] as const;
+
+export const FAQ = [
+  {
+    q: 'Você atende como freelancer?',
+    a: 'Sim. Além do trabalho como Analista de Power BI Sênior, atendo empresas e profissionais em projetos freelancer de Power BI e análise de dados, 100% remoto, para todo o Brasil.',
+  },
+  {
+    q: 'Como funciona um projeto freelancer de Power BI?',
+    a: 'Começa com uma conversa para entender o objetivo e as fontes de dados. Depois envio escopo, prazo e orçamento. Com o aceite, sigo as etapas: modelagem, protótipo do layout, desenvolvimento, validação com você e publicação.',
+  },
+  {
+    q: 'Quanto tempo leva para fazer um dashboard?',
+    a: 'Depende da quantidade de fontes de dados, páginas e regras de negócio. Depois da primeira conversa eu envio um prazo realista para o seu caso.',
+  },
+  {
+    q: 'Você também melhora relatórios que já existem?',
+    a: 'Sim. Faço otimização de performance, correção e reescrita de medidas DAX, ajustes no modelo de dados e redesign visual de relatórios existentes.',
+  },
+  {
+    q: 'Com quais fontes de dados você trabalha?',
+    a: 'SQL Server, Excel, CSV, Dataflows e as demais fontes que o Power BI conecta. Também automatizo coletas com PowerShell quando necessário.',
+  },
+];
 
 export const PILLARS = [
   {

@@ -3,11 +3,17 @@ import { useEffect, useRef, useState } from 'react';
 export type Theme = 'light' | 'dark';
 
 export function useTheme() {
-  const [theme, setTheme] = useState<Theme>(() =>
-    document.documentElement.classList.contains('dark') ? 'dark' : 'light',
-  );
+  // Começa em "dark" para bater com o HTML pré-renderizado; o tema real é lido ao montar.
+  const [theme, setTheme] = useState<Theme>('dark');
+  const ready = useRef(false);
 
   useEffect(() => {
+    if (!ready.current) {
+      ready.current = true;
+      const current: Theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      if (current !== theme) setTheme(current);
+      return;
+    }
     document.documentElement.classList.toggle('dark', theme === 'dark');
     try {
       localStorage.setItem('theme', theme);

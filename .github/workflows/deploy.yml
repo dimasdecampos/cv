@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Republica todo dia 1º para manter datas e tempo de experiência atualizados
+  schedule:
+    - cron: "0 9 1 * *"
 
 permissions:
   contents: read

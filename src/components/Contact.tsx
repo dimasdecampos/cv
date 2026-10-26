@@ -37,13 +37,14 @@ export function Contact() {
   return (
     <Section
       id="contato"
-      eyebrow="06 · Contato"
+      eyebrow="Contato"
       title={
         <>
           Vamos tirar seus dados <span className="text-gradient">do papel?</span>
         </>
       }
-      intro="Novo painel executivo, modernização de dashboards ou consultoria em Power BI: me conte o que você precisa."
+      intro="Precisa de um analista de dados ou especialista em Power BI freelancer? Novo painel executivo, modernização de dashboards ou consultoria: me conte o que você precisa."
+      className="bg-surface-2/50"
     >
       <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
         <Reveal className="space-y-3">
