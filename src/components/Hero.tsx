@@ -44,7 +44,7 @@ export function Hero() {
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted" suppressHydrationWarning>
             Sou {PROFILE.role} na levva e atendo empresas como <strong className="font-semibold text-fg">freelancer</strong>.
-            Há mais de {yearsLabel.replace('+', '')} anos uno engenharia de dados (SQL, ETL, DAX, M) e design de interfaces
+            Há mais de {yearsLabel.replace('+', '')} anos uno análise de dados (SQL, ETL, DAX, M) e design de interfaces
             para entregar BI rápido, confiável e bonito. Também sou <strong className="font-semibold text-fg">desenvolvedor</strong>: crio sites, sistemas e aplicativos com tecnologias modernas como React e TypeScript.
           </p>
 
