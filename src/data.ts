@@ -3,7 +3,7 @@
 export const PROFILE = {
   name: 'Dimas de Campos',
   role: 'Analista de Power BI Sênior',
-  tagline: 'Power BI · DAX · SQL · UI/UX',
+  tagline: 'Power BI · DAX · SQL · React · Apps',
   location: 'São Paulo, SP · Brasil',
   site: 'dimas.space',
   photo: 'images/profile.jpg',
@@ -64,6 +64,21 @@ export const SERVICES = [
     title: 'Consultoria e mentoria',
     text: 'Apoio a times de dados e analistas: boas práticas de modelagem, DAX, governança de BI e revisão de projetos.',
   },
+  {
+    icon: 'smartphone',
+    title: 'Criação de aplicativos',
+    text: 'Aplicativos web e mobile do zero, instaláveis (PWA) e responsivos: da ideia e do protótipo à publicação, com foco em uma experiência simples de usar.',
+  },
+  {
+    icon: 'layers',
+    title: 'Sistemas e painéis sob medida',
+    text: 'Sistemas web com login, cadastros, APIs e painéis de dados feitos com React e TypeScript, ligados ao seu banco de dados ou às suas planilhas.',
+  },
+  {
+    icon: 'globe',
+    title: 'Sites modernos e automações',
+    text: 'Sites e landing pages rápidos, otimizados para o Google, e automações que tiram tarefas manuais do dia a dia da equipe.',
+  },
 ] as const;
 
 export const FAQ = [
@@ -82,6 +97,10 @@ export const FAQ = [
   {
     q: 'Você também melhora relatórios que já existem?',
     a: 'Sim. Faço otimização de performance, correção e reescrita de medidas DAX, ajustes no modelo de dados e redesign visual de relatórios existentes.',
+  },
+  {
+    q: 'Você também desenvolve sites e aplicativos?',
+    a: 'Sim. Também trabalho como desenvolvedor, com tecnologias modernas como React, TypeScript, Vite e Tailwind. Crio sites, sistemas web e aplicativos (web, PWA e mobile) sob medida, inclusive integrados aos seus dados e dashboards.',
   },
   {
     q: 'Com quais fontes de dados você trabalha?',
@@ -107,8 +126,8 @@ export const PILLARS = [
   },
   {
     icon: 'code',
-    title: 'Web & visuais custom',
-    text: 'HTML, CSS e JavaScript para portais e visuais personalizados, como animações Lottie dentro do Power BI.',
+    title: 'Dev web & aplicativos',
+    text: 'Desenvolvimento com React, TypeScript e Tailwind: sites, sistemas, aplicativos e visuais personalizados, como animações Lottie dentro do Power BI.',
   },
 ] as const;
 
@@ -195,7 +214,7 @@ export const EXPERIENCE: Job[] = [
 
 export type Level = 'Avançado' | 'Proficiente' | 'Intermediário';
 
-export const SKILLS: { group: string; icon: 'chart' | 'palette' | 'code'; items: { name: string; level: Level }[] }[] = [
+export const SKILLS: { group: string; icon: 'chart' | 'palette' | 'code' | 'smartphone'; items: { name: string; level: Level }[] }[] = [
   {
     group: 'Business Intelligence',
     icon: 'chart',
@@ -231,6 +250,18 @@ export const SKILLS: { group: string; icon: 'chart' | 'palette' | 'code'; items:
       { name: 'Bootstrap / Tailwind', level: 'Proficiente' },
       { name: 'JavaScript', level: 'Intermediário' },
       { name: 'PHP', level: 'Intermediário' },
+    ],
+  },
+  {
+    group: 'Desenvolvimento & Apps',
+    icon: 'smartphone',
+    items: [
+      { name: 'React', level: 'Intermediário' },
+      { name: 'TypeScript', level: 'Intermediário' },
+      { name: 'Vite & Tailwind CSS', level: 'Intermediário' },
+      { name: 'PWA / apps instaláveis', level: 'Intermediário' },
+      { name: 'APIs e integrações', level: 'Intermediário' },
+      { name: 'Git & GitHub (CI/CD)', level: 'Intermediário' },
     ],
   },
 ];

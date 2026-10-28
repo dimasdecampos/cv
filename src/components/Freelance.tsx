@@ -6,9 +6,9 @@ export function Services() {
   return (
     <Section
       id="servicos"
-      eyebrow="Freelancer · Power BI"
-      title="Analista de dados e Power BI freelancer para a sua empresa"
-      intro="Além do meu trabalho como Analista de Power BI Sênior, atendo projetos freelancer de BI e análise de dados, 100% remoto, para empresas de todo o Brasil."
+      eyebrow="Freelancer · Dados e Desenvolvimento"
+      title="Power BI, sites e aplicativos sob medida para a sua empresa"
+      intro="Além do meu trabalho como Analista de Power BI Sênior, atendo projetos freelancer de BI, análise de dados e desenvolvimento de sites e aplicativos com tecnologias modernas, 100% remoto, para todo o Brasil."
       className="bg-surface-2/50"
       aside={
         <a

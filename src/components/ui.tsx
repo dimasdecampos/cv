@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { BarChart3, Code2, Database, FileSpreadsheet, Palette, Users, Zap, type LucideIcon } from 'lucide-react';
+import { BarChart3, Code2, Database, FileSpreadsheet, Globe, Layers, Palette, Smartphone, Users, Zap, type LucideIcon } from 'lucide-react';
 import { useReveal } from '../hooks';
 
 export const ICONS: Record<string, LucideIcon> = {
@@ -10,6 +10,9 @@ export const ICONS: Record<string, LucideIcon> = {
   zap: Zap,
   sheet: FileSpreadsheet,
   users: Users,
+  smartphone: Smartphone,
+  layers: Layers,
+  globe: Globe,
 };
 
 export function Reveal({
