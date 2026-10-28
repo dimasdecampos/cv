@@ -84,7 +84,7 @@ export function structuredData() {
     name: 'Dimas de Campos | Analista de Dados Sênior e Power BI Freelancer',
     inLanguage: 'pt-BR',
     mainEntity: { '@id': `${URL}#person` },
-    dateModified: new Date().toISOString().slice(0, 10),
+    dateModified: new Date().toISOString(),
     isPartOf: { '@type': 'WebSite', '@id': `${URL}#site`, url: URL, name: 'dimas.space', inLanguage: 'pt-BR' },
   };
 
