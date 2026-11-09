@@ -4,8 +4,8 @@ import { PROFILE, whatsappLink } from '../data';
 import { btn } from './ui';
 
 // GitHub Pages não tem servidor: o FormSubmit recebe o formulário e repassa para o e-mail.
-// No primeiro envio ele manda um e-mail de ativação para PROFILE.email (basta clicar no link).
-const ENDPOINT = `https://formsubmit.co/ajax/${PROFILE.email}`;
+// Entrega no Gmail (o Hotmail bloqueava os e-mails do FormSubmit). O e-mail exibido no site continua PROFILE.email.
+const ENDPOINT = 'https://formsubmit.co/ajax/dimasrafting@gmail.com';
 
 const field =
   'w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm text-fg placeholder:text-subtle transition focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
