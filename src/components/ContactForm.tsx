@@ -6,7 +6,7 @@ import { btn } from './ui';
 // GitHub Pages não tem servidor: o FormSubmit recebe o formulário e repassa para o e-mail.
 // Entrega no Gmail (o Hotmail bloqueava os e-mails do FormSubmit). O e-mail exibido no site continua PROFILE.email.
 // Endereço embaralhado (base64 do texto invertido) para robôs de spam não acharem o e-mail no código.
-const TO = '';
+const TO = 'bW9jLmxpYW1nQGduaXRmYXJzYW1pZA==';
 const endpoint = () => `https://formsubmit.co/ajax/${atob(TO).split('').reverse().join('')}`;
 
 const field =
