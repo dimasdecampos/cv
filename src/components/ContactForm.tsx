@@ -5,7 +5,9 @@ import { btn } from './ui';
 
 // GitHub Pages não tem servidor: o FormSubmit recebe o formulário e repassa para o e-mail.
 // Entrega no Gmail (o Hotmail bloqueava os e-mails do FormSubmit). O e-mail exibido no site continua PROFILE.email.
-const ENDPOINT = 'https://formsubmit.co/ajax/dimasrafting@gmail.com';
+// Endereço embaralhado (base64 do texto invertido) para robôs de spam não acharem o e-mail no código.
+const TO = '';
+const endpoint = () => `https://formsubmit.co/ajax/${atob(TO).split('').reverse().join('')}`;
 
 const field =
   'w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm text-fg placeholder:text-subtle transition focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
@@ -27,7 +29,7 @@ export function ContactForm({ origem, placeholder }: { origem: string; placehold
     if (new FormData(e.currentTarget).get('_honey')) return;
     setStatus('sending');
     try {
-      const res = await fetch(ENDPOINT, {
+      const res = await fetch(endpoint(), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
