@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowUpRight, BarChart3, ChevronDown, MessageCircle } from 'lucide-react';
 import { DEV_PROJECTS, WEB_FAQ, WEB_SERVICES, WEB_STEPS, whatsappLink } from '../data';
+import { ContactForm } from './ContactForm';
 import { DemoSites, DevProjects } from './DevProjects';
 import { ICONS, Reveal, Section, Tag, btn } from './ui';
 
@@ -181,6 +182,10 @@ function CallToAction() {
               <BarChart3 className="h-4 w-4 text-accent" />
               Também faço Power BI e análise de dados
             </a>
+          </div>
+          <div className="no-print relative mx-auto mt-10 max-w-2xl rounded-2xl border border-line bg-bg/60 p-6 sm:p-8">
+            <p className="mb-5 text-sm text-muted">Ou deixe sua mensagem aqui, que ela chega direto no meu e-mail:</p>
+            <ContactForm origem="Orçamento de site ou aplicativo" placeholder="Ex.: site para minha loja" />
           </div>
         </Reveal>
       </div>

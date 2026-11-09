@@ -1,29 +1,11 @@
-import { useState, type FormEvent } from 'react';
-import { ArrowUpRight, Check, Copy, Linkedin, Mail, MessageCircle, Send } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowUpRight, Check, Copy, Linkedin, Mail, MessageCircle } from 'lucide-react';
+import { ContactForm } from './ContactForm';
 import { PROFILE, SOCIAL, whatsappLink } from '../data';
 import { Reveal, Section, btn } from './ui';
 
-const field =
-  'w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm text-fg placeholder:text-subtle transition focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
-
 export function Contact() {
   const [copied, setCopied] = useState(false);
-  const [form, setForm] = useState({ nome: '', email: '', assunto: '', mensagem: '' });
-  const set = (k: keyof typeof form) => (e: { target: { value: string } }) => setForm({ ...form, [k]: e.target.value });
-
-  const message = () =>
-    `Olá Dimas! Sou ${form.nome} (${form.email}).\n\nAssunto: ${form.assunto || 'Contato pelo portfólio'}\n\n${form.mensagem}`;
-
-  const sendWhatsApp = (e: FormEvent) => {
-    e.preventDefault();
-    window.open(whatsappLink(message()), '_blank', 'noopener,noreferrer');
-  };
-
-  const sendEmail = () => {
-    const subject = encodeURIComponent(form.assunto || 'Contato pelo portfólio');
-    window.location.href = `mailto:${PROFILE.email}?subject=${subject}&body=${encodeURIComponent(message())}`;
-  };
-
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(PROFILE.email);
@@ -95,56 +77,7 @@ export function Contact() {
         </Reveal>
 
         <Reveal delay={100} className="no-print rounded-2xl border border-line bg-surface p-6 sm:p-8">
-          <form onSubmit={sendWhatsApp} className="grid gap-4 sm:grid-cols-2">
-            <label className="block">
-              <span className="mb-1.5 block text-xs font-medium text-muted">Nome *</span>
-              <input required autoComplete="name" value={form.nome} onChange={set('nome')} className={field} placeholder="Seu nome" />
-            </label>
-            <label className="block">
-              <span className="mb-1.5 block text-xs font-medium text-muted">E-mail *</span>
-              <input
-                required
-                type="email"
-                autoComplete="email"
-                value={form.email}
-                onChange={set('email')}
-                className={field}
-                placeholder="voce@empresa.com"
-              />
-            </label>
-            <label className="block sm:col-span-2">
-              <span className="mb-1.5 block text-xs font-medium text-muted">Assunto</span>
-              <input value={form.assunto} onChange={set('assunto')} className={field} placeholder="Ex.: dashboard de vendas em Power BI" />
-            </label>
-            <label className="block sm:col-span-2">
-              <span className="mb-1.5 block text-xs font-medium text-muted">Mensagem *</span>
-              <textarea
-                required
-                rows={5}
-                value={form.mensagem}
-                onChange={set('mensagem')}
-                className={`${field} resize-y`}
-                placeholder="Conte um pouco sobre o projeto, objetivos e prazos."
-              />
-            </label>
-            <div className="flex flex-col gap-3 sm:col-span-2 sm:flex-row">
-              <button type="submit" className={btn.primary}>
-                <Send className="h-4 w-4" />
-                Enviar pelo WhatsApp
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  const f = (e.currentTarget as HTMLButtonElement).form;
-                  if (f?.reportValidity()) sendEmail();
-                }}
-                className={btn.secondary}
-              >
-                <Mail className="h-4 w-4 text-accent" />
-                Enviar por e-mail
-              </button>
-            </div>
-          </form>
+          <ContactForm origem="Contato pelo portfólio (dados / Power BI)" placeholder="Ex.: dashboard de vendas em Power BI" />
         </Reveal>
       </div>
     </Section>
