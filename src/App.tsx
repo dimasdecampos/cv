@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, ArrowUpRight } from 'lucide-react';
+import { btn } from './components/ui';
 import { Contact } from './components/Contact';
 import { Faq, Services } from './components/Freelance';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { DevProjects } from './components/DevProjects';
 import { Portfolio } from './components/Portfolio';
+import { SitesPage } from './components/SitesPage';
 import { About, Education, Experience, Skills } from './components/Sections';
-import { PROFILE, SOCIAL } from './data';
+import { PROFILE, SITES_NAV, SOCIAL } from './data';
 
-export default function App() {
+export type Page = 'home' | 'sites';
+
+export default function App({ page = 'home' }: { page?: Page }) {
   return (
     <>
       <a
@@ -17,18 +22,37 @@ export default function App() {
       >
         Pular para o conteúdo
       </a>
-      <Header />
-      <main id="conteudo">
-        <Hero />
-        <About />
-        <Services />
-        <Experience />
-        <Skills />
-        <Portfolio />
-        <Education />
-        <Faq />
-        <Contact />
-      </main>
+      {page === 'sites' ? (
+        <>
+          <Header nav={SITES_NAV} link={{ href: '../', label: 'Power BI' }} />
+          <main id="conteudo">
+            <SitesPage />
+          </main>
+        </>
+      ) : (
+        <>
+          <Header link={{ href: 'criacao-de-sites/', label: 'Criação de sites' }} />
+          <main id="conteudo">
+            <Hero />
+            <About />
+            <Services />
+            <Experience />
+            <Skills />
+            <Portfolio />
+            <DevProjects
+              aside={
+                <a href="criacao-de-sites/" className={`${btn.secondary} no-print shrink-0`}>
+                  Criação de sites e apps
+                  <ArrowUpRight className="h-4 w-4 text-accent" />
+                </a>
+              }
+            />
+            <Education />
+            <Faq />
+            <Contact />
+          </main>
+        </>
+      )}
       <Footer />
       <BackToTop />
     </>

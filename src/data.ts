@@ -32,6 +32,15 @@ export const NAV = [
   { id: 'contato', label: 'Contato' },
 ] as const;
 
+export const SITES_NAV = [
+  { id: 'servicos', label: 'Serviços' },
+  { id: 'projetos', label: 'Projetos' },
+  { id: 'modelos', label: 'Modelos' },
+  { id: 'como-funciona', label: 'Como funciona' },
+  { id: 'faq', label: 'Dúvidas' },
+  { id: 'contato', label: 'Contato' },
+] as const;
+
 // Serviços oferecidos como freelancer (também vão para os dados estruturados do Google)
 export const SERVICES = [
   {
@@ -464,6 +473,188 @@ export const PROJECTS: Project[] = [
     image: 'projetos/subettini2.webp',
     description: 'Grade de pacotes com foto, preço, duração e destino.',
     tech: ['HTML5', 'CSS3', 'UI'],
+  },
+];
+
+// Sites, sistemas e aplicativos (seção "Sites & Apps" e página /criacao-de-sites/).
+// Imagens em public/projetos/dev/ (1280x800, .webp).
+export interface DevProject {
+  id: string;
+  title: string;
+  kind: string;
+  image: string;
+  description: string;
+  highlights: string[];
+  tech: string[];
+  url?: string;
+  status?: string;
+}
+
+export const DEV_PROJECTS: DevProject[] = [
+  {
+    id: 'voando-perto',
+    title: 'Voando Perto',
+    kind: 'Aplicativo web (PWA) · Observação de aves',
+    image: 'projetos/dev/voando.webp',
+    description:
+      'App para observadores de aves: mostra as espécies registradas perto de você, raridades, hotspots e cantos, com dados do eBird, fotos do iNaturalist e sons do xeno-canto.',
+    highlights: ['Geolocalização e mapa interativo', 'Instalável no celular (PWA)', 'Integração com 3 APIs científicas'],
+    tech: ['Next.js', 'React', 'TypeScript', 'APIs REST', 'Leaflet', 'PWA'],
+    url: 'https://voando-perto.vercel.app/',
+  },
+  {
+    id: 'monitor-rios',
+    title: 'Monitor dos Rios',
+    kind: 'Painel em tempo real · Dados públicos',
+    image: 'projetos/dev/rios.webp',
+    description:
+      'Nível e chuva dos rios Paraitinga e Paraibuna em tempo real, com dados da ANA, histórico de anos anteriores, previsão, avisos de cheia no celular e modo TV.',
+    highlights: ['Atualização automática dos dados', 'Avisos de cheia no celular', 'Gráficos e comparação entre anos'],
+    tech: ['JavaScript', 'Python', 'Gráficos', 'Notificações push', 'PWA'],
+    url: 'https://dimasdecampos.github.io/monitora-rio/',
+  },
+  {
+    id: 'temaqui',
+    title: 'TemAqui',
+    kind: 'Marketplace local · Estilo OLX',
+    image: 'projetos/dev/temaqui.webp',
+    description:
+      'Classificados da cidade para comprar, vender e anunciar o que procura. O sistema cruza procuras e ofertas, avisa quando há match e tem chat entre comprador e vendedor.',
+    highlights: ['Login com Google', 'Anúncios com fotos e chat', 'Painel de administração e moderação'],
+    tech: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL'],
+    url: 'https://classificadosslp.vercel.app/',
+  },
+  {
+    id: 'mause',
+    title: 'Mause',
+    kind: 'Aplicativo Android',
+    image: 'projetos/dev/mause.webp',
+    description:
+      'App que transforma o celular em mouse e touchpad Bluetooth, com movimento automático em intervalos aleatórios. Sem cadastro, sem anúncios e sem coleta de dados.',
+    highlights: ['Funciona como mouse Bluetooth real', 'Roda com a tela apagada', 'Compra dentro do app (versão Pro)'],
+    tech: ['Kotlin', 'Android', 'Bluetooth HID', 'Google Play'],
+    status: 'Em fase de testes na Google Play',
+  },
+  {
+    id: 'refugio',
+    title: 'Refúgio Beira Rio',
+    kind: 'Site institucional · Turismo',
+    image: 'projetos/dev/refugio.webp',
+    description:
+      'Site de um refúgio às margens do rio em Natividade da Serra (SP), com fotos panorâmicas 360°, atividades, localização e contato direto pelo WhatsApp.',
+    highlights: ['Domínio próprio', 'Otimizado para o Google (SEO)', 'Fotos panorâmicas 360°'],
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'SEO'],
+    url: 'https://refugiobeirario.com/',
+  },
+  {
+    id: 'subettini-croche',
+    title: 'Subettini Crochê',
+    kind: 'Site vitrine · Artesanato',
+    image: 'projetos/dev/croche.webp',
+    description:
+      'Site de uma artesã de crochê com história, vitrine de peças com filtros, encomendas, depoimentos e botão de WhatsApp sempre à mão.',
+    highlights: ['Vitrine com filtros por categoria', 'Pedidos pelo WhatsApp', 'Rápido e responsivo'],
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'GitHub Pages'],
+    url: 'https://dimasdecampos.github.io/crochet/',
+  },
+  {
+    id: 'estoura',
+    title: 'Estoura',
+    kind: 'Rede social · Comunidade',
+    image: 'projetos/dev/estoura.webp',
+    description:
+      'Rede para encontrar pessoas com os mesmos interesses: cada interesse é uma bolha, e o app mostra quem curte o mesmo, com grupos, eventos e mensagens em tempo real.',
+    highlights: ['Login com Google', 'Mensagens em tempo real', 'Notificações no celular'],
+    tech: ['Next.js', 'JavaScript', 'Supabase', 'Realtime', 'Vercel'],
+    url: 'https://estoura.vercel.app/',
+  },
+];
+
+// Sites de demonstração (negócios fictícios), em public/modelos/
+export const DEMO_SITES = [
+  {
+    id: 'restaurante',
+    title: 'Restaurante e lanchonete',
+    name: 'Sabor da Serra',
+    image: 'projetos/dev/modelo-restaurante.webp',
+    description: 'Cardápio com categorias, pedido pelo WhatsApp, horários, avaliações e mapa.',
+    url: 'modelos/restaurante/',
+  },
+  {
+    id: 'loja',
+    title: 'Loja e comércio local',
+    name: 'Empório da Vila',
+    image: 'projetos/dev/modelo-loja.webp',
+    description: 'Vitrine de produtos com filtro, sacola e pedido finalizado pelo WhatsApp.',
+    url: 'modelos/loja/',
+  },
+];
+
+// Página /criacao-de-sites/
+export const WEB_SERVICES = [
+  {
+    icon: 'globe',
+    title: 'Sites institucionais e landing pages',
+    text: 'Site profissional para a sua empresa ou serviço: rápido, bonito no celular e pronto para aparecer no Google.',
+  },
+  {
+    icon: 'store',
+    title: 'Loja virtual e catálogo',
+    text: 'Vitrine de produtos com fotos, preços e pedido pelo WhatsApp ou carrinho, sem mensalidade de plataforma.',
+  },
+  {
+    icon: 'smartphone',
+    title: 'Aplicativos web e Android',
+    text: 'Apps instaláveis no celular (PWA) e apps Android nativos, da ideia e do protótipo até a publicação.',
+  },
+  {
+    icon: 'layers',
+    title: 'Sistemas sob medida',
+    text: 'Marketplaces, áreas de cliente, cadastros e painéis administrativos com login, banco de dados e permissões.',
+  },
+  {
+    icon: 'palette',
+    title: 'Redesign de sites antigos',
+    text: 'Seu site está lento ou ultrapassado? Modernizo o visual e a estrutura, inclusive saindo do Wix e de plataformas parecidas.',
+  },
+  {
+    icon: 'search',
+    title: 'SEO e presença no Google',
+    text: 'Títulos, descrições, dados estruturados, sitemap, velocidade e Google Search Console configurados desde o início.',
+  },
+] as const;
+
+export const WEB_STEPS = [
+  { title: 'Conversa', text: 'Entendo o seu negócio, o público e o que o site ou app precisa resolver.' },
+  { title: 'Proposta', text: 'Envio escopo, prazo e orçamento fechado, sem surpresas.' },
+  { title: 'Protótipo e desenvolvimento', text: 'Você acompanha o layout e as páginas tomando forma e pede ajustes.' },
+  { title: 'Publicação', text: 'Coloco no ar com domínio, HTTPS e Google configurados, e ensino a atualizar.' },
+];
+
+export const WEB_FAQ = [
+  {
+    q: 'Quanto custa criar um site?',
+    a: 'Depende do número de páginas e das funções (catálogo, formulários, área de login). Depois de uma conversa rápida eu envio um orçamento fechado para o seu caso.',
+  },
+  {
+    q: 'O site vai aparecer no Google?',
+    a: 'Sim. Todo site sai com boas práticas de SEO: títulos e descrições por página, dados estruturados, sitemap, carregamento rápido e cadastro no Google Search Console.',
+  },
+  {
+    q: 'Vou precisar pagar mensalidade?',
+    a: 'Na maioria dos casos, não há mensalidade de plataforma: os sites ficam em hospedagens gratuitas ou baratas, como GitHub Pages e Vercel. O custo fixo costuma ser só o domínio .com.br, renovado uma vez por ano.',
+  },
+  {
+    q: 'Você cria aplicativos para celular?',
+    a: 'Sim. Crio aplicativos web instaláveis (PWA), que funcionam em Android e iPhone, e aplicativos Android nativos em Kotlin para a Google Play.',
+  },
+  {
+    q: 'Quanto tempo leva para ficar pronto?',
+    a: 'Um site simples de uma página pode ficar pronto em poucos dias; sites maiores, lojas e aplicativos levam algumas semanas. O prazo vai na proposta.',
+  },
+  {
+    q: 'Você atende fora de São Paulo?',
+    a: 'Sim. O atendimento é 100% remoto, por WhatsApp e videochamada, para todo o Brasil.',
   },
 ];
 

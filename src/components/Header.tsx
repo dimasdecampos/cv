@@ -3,10 +3,18 @@ import { Menu, Moon, Sun, X } from 'lucide-react';
 import { NAV, PROFILE, whatsappLink } from '../data';
 import { useActiveSection, useScrolled, useTheme } from '../hooks';
 
-// "inicio" entra na lista só para limpar o destaque quando a pessoa volta ao topo
-const NAV_IDS = ['inicio', ...NAV.map((n) => n.id)];
+type NavItem = { id: string; label: string };
 
-export function Header() {
+export function Header({
+  nav = NAV,
+  link,
+}: {
+  nav?: readonly NavItem[];
+  /** link extra no fim do menu, para a outra página do site */
+  link?: { href: string; label: string };
+}) {
+  // "inicio" entra na lista só para limpar o destaque quando a pessoa volta ao topo
+  const NAV_IDS = ['inicio', ...nav.map((n) => n.id)];
   const [open, setOpen] = useState(false);
   const { theme, toggle } = useTheme();
   const active = useActiveSection(NAV_IDS);
@@ -30,22 +38,27 @@ export function Header() {
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent font-display text-sm font-bold text-on-accent transition group-hover:rotate-6">
             DC
           </span>
-          <span className="font-display text-base font-semibold text-fg">{PROFILE.name}</span>
+          <span className="whitespace-nowrap font-display text-base font-semibold text-fg">{PROFILE.name}</span>
         </a>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Seções">
-          {NAV.map((item) => (
+        <nav className="hidden items-center gap-1 xl:flex" aria-label="Seções">
+          {nav.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
               aria-current={active === item.id ? 'true' : undefined}
-              className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
+              className={`whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition ${
                 active === item.id ? 'bg-accent-soft text-accent' : 'text-muted hover:text-fg'
               }`}
             >
               {item.label}
             </a>
           ))}
+          {link && (
+            <a href={link.href} className="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-muted transition hover:text-fg">
+              {link.label}
+            </a>
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -62,14 +75,14 @@ export function Header() {
             href={whatsappLink('Olá Dimas, vi seu portfólio e gostaria de conversar.')}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden rounded-xl bg-accent px-4 py-2 text-sm font-semibold text-on-accent transition hover:bg-accent-strong sm:inline-flex"
+            className="hidden whitespace-nowrap rounded-xl bg-accent px-4 py-2 text-sm font-semibold text-on-accent transition hover:bg-accent-strong sm:inline-flex"
           >
             Vamos conversar
           </a>
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-line bg-surface text-fg lg:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-line bg-surface text-fg xl:hidden"
             aria-label={open ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={open}
             aria-controls="menu-mobile"
@@ -80,9 +93,9 @@ export function Header() {
       </div>
 
       {open && (
-        <nav id="menu-mobile" className="animate-fade-in border-t border-line px-4 pb-5 pt-3 lg:hidden" aria-label="Seções">
+        <nav id="menu-mobile" className="animate-fade-in border-t border-line px-4 pb-5 pt-3 xl:hidden" aria-label="Seções">
           <div className="grid grid-cols-2 gap-1">
-            {NAV.map((item) => (
+            {nav.map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
@@ -94,6 +107,11 @@ export function Header() {
                 {item.label}
               </a>
             ))}
+            {link && (
+              <a href={link.href} className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted hover:bg-surface-2 hover:text-fg">
+                {link.label}
+              </a>
+            )}
           </div>
           <a
             href={whatsappLink('Olá Dimas, vi seu portfólio e gostaria de conversar.')}

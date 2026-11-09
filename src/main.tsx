@@ -1,12 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
-import App from './App.tsx';
+import App, { type Page } from './App.tsx';
 import './index.css';
 
 const root = document.getElementById('root')!;
 const app = (
   <StrictMode>
-    <App />
+    <App page={(root.dataset.page as Page) || 'home'} />
   </StrictMode>
 );
 

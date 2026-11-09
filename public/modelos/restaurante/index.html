@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sabor da Serra · Modelo de site para restaurante e lanchonete</title>
+<meta name="description" content="Modelo de demonstração de site para restaurante e lanchonete, com cardápio, pedido pelo WhatsApp, horários e avaliações. Criado por Dimas de Campos.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://dimas.space/modelos/restaurante/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%94%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fffaf3; --surface: #ffffff; --ink: #1f1712; --muted: #6b5d52; --line: #efe3d3;
+    --brand: #c2410c; --brand-dark: #9a3412; --brand-soft: #ffedd5; --leaf: #3f6212; --gold: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font: 16px/1.6 Inter, system-ui, sans-serif; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; line-height: 1.1; letter-spacing: -0.01em; }
+  a { color: inherit; }
+  img { max-width: 100%; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; border-radius: 999px; padding: 14px 24px; font: 600 15px Inter, sans-serif; text-decoration: none; transition: transform .15s, background .15s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 10px 24px -10px rgb(194 65 12 / .7); }
+  .btn-primary:hover { background: var(--brand-dark); }
+  .btn-ghost { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+
+  /* Faixa de demonstração */
+  .demo { background: #1f1712; color: #fde9d2; font-size: 13px; text-align: center; padding: 8px 16px; }
+  .demo a { color: #fdba74; font-weight: 600; }
+
+  header.top { position: sticky; top: 0; z-index: 20; background: rgb(255 250 243 / .9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: Fraunces, serif; font-weight: 800; font-size: 22px; text-decoration: none; }
+  .logo span { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--brand); font-size: 20px; }
+  nav.menu { display: flex; gap: 22px; font-weight: 500; font-size: 15px; }
+  nav.menu a { text-decoration: none; color: var(--muted); }
+  nav.menu a:hover { color: var(--brand); }
+  @media (max-width: 760px) { nav.menu { display: none; } }
+
+  .hero { padding: 64px 0 72px; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; background: var(--brand-soft); color: var(--brand-dark); font-weight: 600; font-size: 13px; padding: 6px 12px; border-radius: 999px; }
+  .pill i { width: 8px; height: 8px; border-radius: 50%; background: #16a34a; box-shadow: 0 0 0 4px rgb(22 163 74 / .2); }
+  .hero h1 { font-size: clamp(40px, 6vw, 64px); margin: 18px 0 16px; }
+  .hero h1 em { font-style: normal; color: var(--brand); }
+  .hero p.lead { font-size: 18px; color: var(--muted); max-width: 520px; }
+  .hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .hero .facts { display: flex; gap: 28px; margin-top: 36px; font-size: 14px; color: var(--muted); }
+  .hero .facts b { display: block; font-size: 22px; color: var(--ink); font-family: Fraunces, serif; }
+  .plate { position: relative; aspect-ratio: 1; max-width: 460px; margin: 0 auto; width: 100%; }
+  .plate .disc { position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #fde7cf 60%, #f8c99a); box-shadow: 0 40px 80px -30px rgb(154 52 18 / .45), inset 0 -12px 30px rgb(154 52 18 / .15); display: grid; place-items: center; font-size: clamp(110px, 18vw, 180px); }
+  .plate .tag { position: absolute; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px; font-size: 13px; box-shadow: 0 12px 30px -16px rgb(0 0 0 / .3); }
+  .plate .tag b { display: block; font-size: 15px; }
+  .plate .t1 { left: -2%; top: 14%; } .plate .t2 { right: -2%; bottom: 16%; }
+  .plate .float { position: absolute; font-size: 40px; animation: bob 4s ease-in-out infinite; }
+  .plate .f1 { right: 6%; top: 4%; } .plate .f2 { left: 6%; bottom: 4%; animation-delay: -2s; }
+  @keyframes bob { 50% { transform: translateY(-10px) rotate(6deg); } }
+  @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .plate { max-width: 340px; } }
+
+  section.block { padding: 72px 0; }
+  .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+  .eyebrow { color: var(--brand); font-weight: 700; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; }
+  .head h2 { font-size: clamp(30px, 4vw, 42px); margin-top: 6px; }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tabs button { border: 1px solid var(--line); background: var(--surface); padding: 9px 16px; border-radius: 999px; font: 600 14px Inter, sans-serif; color: var(--muted); cursor: pointer; }
+  .tabs button[aria-selected="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .dish { display: grid; grid-template-columns: 76px 1fr auto; gap: 16px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 14px; transition: border-color .15s, transform .15s; }
+  .dish:hover { border-color: #fdba74; transform: translateY(-2px); }
+  .dish .emoji { width: 76px; height: 76px; border-radius: 16px; display: grid; place-items: center; font-size: 40px; background: var(--brand-soft); }
+  .dish h3 { font-size: 18px; }
+  .dish p { font-size: 13px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+  .dish .price { font-weight: 700; margin-top: 6px; font-size: 15px; }
+  .dish .badge { display: inline-block; font: 600 11px Inter; color: var(--leaf); background: #ecfccb; border-radius: 6px; padding: 2px 6px; margin-left: 6px; vertical-align: middle; }
+  .add { width: 40px; height: 40px; border-radius: 12px; border: 0; background: var(--brand); color: #fff; font-size: 22px; cursor: pointer; }
+  .add:hover { background: var(--brand-dark); }
+
+  .info { background: #1f1712; color: #fde9d2; }
+  .info .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .info .card { background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .1); border-radius: 20px; padding: 24px; }
+  .info h3 { color: #fff; font-size: 22px; margin-bottom: 12px; }
+  .info .eyebrow { color: #fdba74; }
+  .info table { width: 100%; font-size: 15px; border-collapse: collapse; }
+  .info td { padding: 6px 0; border-bottom: 1px dashed rgb(255 255 255 / .12); }
+  .info td + td { text-align: right; color: #fff; font-weight: 600; }
+  .map { margin-top: 12px; border-radius: 14px; overflow: hidden; background: #2a201a; }
+  @media (max-width: 860px) { .info .grid3 { grid-template-columns: 1fr; } }
+
+  .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .review { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+  .stars { color: var(--gold); letter-spacing: 2px; }
+  .review p { margin: 10px 0 14px; color: var(--muted); }
+  .review b { font-size: 14px; }
+  @media (max-width: 860px) { .reviews { grid-template-columns: 1fr; } }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0 120px; font-size: 14px; color: var(--muted); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  /* Sacola */
+  .bag { position: fixed; left: 50%; bottom: 16px; transform: translate(-50%, 140%); z-index: 30; width: min(560px, calc(100% - 32px)); background: var(--ink); color: #fff; border-radius: 20px; padding: 12px 12px 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 20px 40px -12px rgb(0 0 0 / .5); transition: transform .3s; }
+  .bag.show { transform: translate(-50%, 0); }
+  .bag small { display: block; color: #d6c4b5; font-size: 12px; }
+  .bag strong { font-size: 18px; }
+  .modal { position: fixed; inset: 0; z-index: 40; background: rgb(31 23 18 / .6); display: none; place-items: center; padding: 16px; }
+  .modal.open { display: grid; }
+  .sheet { background: var(--surface); border-radius: 24px; padding: 24px; width: min(480px, 100%); max-height: 90vh; overflow: auto; }
+  .sheet h3 { font-size: 24px; }
+  .sheet pre { white-space: pre-wrap; font: 14px/1.5 Inter, sans-serif; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 14px; padding: 14px; margin: 14px 0; }
+  .sheet .note { font-size: 13px; color: var(--muted); }
+  .sheet .row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .wa { background: #16a34a; color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="demo">Modelo de demonstração · negócio fictício. Site criado por Dimas de Campos. <a href="../../criacao-de-sites/">Quero um site assim →</a></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#"><span>🍔</span>Sabor da Serra</a>
+    <nav class="menu" aria-label="Seções">
+      <a href="#cardapio">Cardápio</a>
+      <a href="#informacoes">Horários</a>
+      <a href="#avaliacoes">Avaliações</a>
+    </nav>
+    <a class="btn btn-primary" href="#cardapio" style="padding:10px 18px">Fazer pedido</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="pill"><i></i>Aberto agora · entrega em 30–45 min</span>
+        <h1>Lanches artesanais e <em>comida caseira</em> no coração da serra</h1>
+        <p class="lead">Pão feito aqui, carne moída na hora e o tempero de família. Peça pelo WhatsApp e receba em casa ou retire no balcão.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#cardapio">Ver cardápio</a>
+          <a class="btn btn-ghost" href="#informacoes">Horários e endereço</a>
+        </div>
+        <div class="facts">
+          <div><b>4,9 ★</b>320 avaliações</div>
+          <div><b>12 anos</b>de casa</div>
+          <div><b>R$ 0</b>taxa até 3 km</div>
+        </div>
+      </div>
+      <div class="plate" aria-hidden="true">
+        <div class="disc">🍔</div>
+        <div class="tag t1"><b>X-Serra</b>o mais pedido</div>
+        <div class="tag t2"><b>Combo família</b>R$ 89,90</div>
+        <div class="float f1">🍟</div>
+        <div class="float f2">🥤</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="cardapio">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="eyebrow">Cardápio</p>
+          <h2>O que vai ser hoje?</h2>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Categorias do cardápio"></div>
+      </div>
+      <div class="menu-grid" id="menu"></div>
+    </div>
+  </section>
+
+  <section class="block info" id="informacoes">
+    <div class="wrap">
+      <div class="head"><div><p class="eyebrow">Venha nos visitar</p><h2 style="color:#fff">Horários e endereço</h2></div></div>
+      <div class="grid3">
+        <div class="card">
+          <h3>Horários</h3>
+          <table>
+            <tr><td>Segunda</td><td>Fechado</td></tr>
+            <tr><td>Terça a quinta</td><td>11h – 22h</td></tr>
+            <tr><td>Sexta e sábado</td><td>11h – 23h30</td></tr>
+            <tr><td>Domingo</td><td>11h – 16h</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Onde estamos</h3>
+          <p>Rua das Flores, 120 · Centro<br>Cidade da Serra · SP</p>
+          <div class="map" aria-label="Mapa ilustrativo">
+            <svg viewBox="0 0 300 120" width="100%" role="img" aria-label="Mapa ilustrativo do endereço">
+              <rect width="300" height="120" fill="#2a201a"/>
+              <path d="M0 80 C60 70 90 95 150 82 S250 60 300 70" stroke="#4a3a2e" stroke-width="14" fill="none"/>
+              <path d="M110 0 L130 120 M210 0 L190 120" stroke="#3a2d24" stroke-width="10"/>
+              <circle cx="160" cy="60" r="18" fill="#c2410c" opacity=".25"/>
+              <path d="M160 38c-9 0-16 7-16 16 0 12 16 26 16 26s16-14 16-26c0-9-7-16-16-16z" fill="#f97316"/>
+              <circle cx="160" cy="54" r="6" fill="#fff"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Entrega e retirada</h3>
+          <p>Entregamos em toda a cidade. Taxa grátis até 3 km, e R$ 5 acima disso.</p>
+          <p style="margin-top:10px">Pagamento: Pix, cartão e dinheiro.</p>
+          <a class="btn btn-primary" href="#cardapio" style="margin-top:16px">Montar meu pedido</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="avaliacoes">
+    <div class="wrap">
+      <div class="head"><div><p class="eyebrow">Avaliações</p><h2>Quem prova, volta</h2></div></div>
+      <div class="reviews">
+        <div class="review"><div class="stars">★★★★★</div><p>“O X-Serra é o melhor lanche da região, e o pão é feito lá mesmo. Chegou quentinho.”</p><b>Mariana S.</b></div>
+        <div class="review"><div class="stars">★★★★★</div><p>“Prato feito de domingo igual comida de vó. Atendimento muito atencioso.”</p><b>Carlos R.</b></div>
+        <div class="review"><div class="stars">★★★★★</div><p>“Pedi pelo WhatsApp em dois minutos. Prático e o combo família vale muito.”</p><b>Juliana P.</b></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© Sabor da Serra · negócio fictício para demonstração</span>
+    <span>Site por <a href="../../criacao-de-sites/">Dimas de Campos · criação de sites</a></span>
+  </div>
+</footer>
+
+<div class="bag" id="bag" aria-live="polite">
+  <div><small id="bagCount">0 itens</small><strong id="bagTotal">R$ 0,00</strong></div>
+  <button class="btn btn-primary" id="checkout" type="button">Enviar pedido</button>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="sheet">
+    <h3 id="modalTitle">Seu pedido está pronto</h3>
+    <p class="note">No site de verdade, este botão abre o WhatsApp do restaurante com a mensagem abaixo já escrita.</p>
+    <pre id="msg"></pre>
+    <div class="row">
+      <button class="btn btn-ghost" type="button" id="clear">Limpar pedido</button>
+      <button class="btn btn-ghost" type="button" id="close">Continuar escolhendo</button>
+    </div>
+    <p class="note" style="margin-top:16px">Gostou? <a href="../../criacao-de-sites/" style="color:var(--brand);font-weight:600">Peça um site assim para o seu negócio →</a></p>
+  </div>
+</div>
+
+<script>
+  const MENU = {
+    'Lanches': [
+      ['🍔', 'X-Serra', 'Hambúrguer 180 g, queijo minas derretido, bacon e cebola caramelizada no pão da casa.', 32.9, 'mais pedido'],
+      ['🥪', 'Bauru da casa', 'Rosbife, queijo, tomate e picles no pão francês tostado.', 26.9],
+      ['🌭', 'Cachorro-quente prensado', 'Duas salsichas, purê, vinagrete, milho e batata palha.', 19.9],
+      ['🥗', 'Burger de grão-de-bico', 'Hambúrguer vegetal, rúcula, tomate e maionese de ervas.', 29.9, 'vegano'],
+    ],
+    'Pratos': [
+      ['🍛', 'Prato feito', 'Arroz, feijão, bife acebolado, farofa, salada e fritas.', 34.9],
+      ['🍗', 'Frango caipira', 'Frango ensopado com quiabo, polenta cremosa e couve.', 39.9],
+      ['🐟', 'Tilápia grelhada', 'Filé de tilápia, arroz com brócolis e legumes salteados.', 42.9],
+    ],
+    'Porções': [
+      ['🍟', 'Batata rústica', 'Batata com casca, alecrim e alho. Serve 2 pessoas.', 24.9],
+      ['🧀', 'Mandioca com queijo', 'Mandioca frita com queijo coalho grelhado.', 29.9],
+      ['🍤', 'Isca de frango', 'Tirinhas empanadas com molho da casa.', 34.9],
+    ],
+    'Bebidas': [
+      ['🥤', 'Refrigerante lata', 'Coca-Cola, Guaraná ou Sprite.', 6.5],
+      ['🍹', 'Suco natural', 'Laranja, limão, maracujá ou abacaxi com hortelã.', 9.9],
+      ['☕', 'Café coado', 'Café da região, feito na hora.', 4.5],
+    ],
+    'Sobremesas': [
+      ['🍮', 'Pudim de leite', 'Receita da família, com calda de caramelo.', 12.9],
+      ['🍫', 'Brownie com sorvete', 'Brownie quente com sorvete de creme.', 18.9],
+    ],
+  };
+
+  const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const tabs = document.querySelector('.tabs');
+  const grid = document.getElementById('menu');
+  const order = new Map();
+
+  function show(cat) {
+    tabs.querySelectorAll('button').forEach((b) => b.setAttribute('aria-selected', b.textContent === cat));
+    grid.innerHTML = MENU[cat].map(([e, name, desc, price, badge], i) => `
+      <article class="dish">
+        <div class="emoji" aria-hidden="true">${e}</div>
+        <div>
+          <h3>${name}${badge ? `<span class="badge">${badge}</span>` : ''}</h3>
+          <p>${desc}</p>
+          <div class="price">${brl(price)}</div>
+        </div>
+        <button class="add" type="button" aria-label="Adicionar ${name}" data-cat="${cat}" data-i="${i}">+</button>
+      </article>`).join('');
+  }
+
+  Object.keys(MENU).forEach((cat, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.role = 'tab'; b.textContent = cat;
+    b.onclick = () => show(cat);
+    tabs.append(b);
+    if (i === 0) show(cat);
+  });
+
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('.add');
+    if (!btn) return;
+    const [, name, , price] = MENU[btn.dataset.cat][btn.dataset.i];
+    const item = order.get(name) || { price, qty: 0 };
+    item.qty++;
+    order.set(name, item);
+    btn.textContent = '✓';
+    setTimeout(() => (btn.textContent = '+'), 700);
+    updateBag();
+  });
+
+  function updateBag() {
+    let qty = 0, total = 0;
+    order.forEach((it) => { qty += it.qty; total += it.qty * it.price; });
+    document.getElementById('bagCount').textContent = `${qty} ${qty === 1 ? 'item' : 'itens'}`;
+    document.getElementById('bagTotal').textContent = brl(total);
+    document.getElementById('bag').classList.toggle('show', qty > 0);
+    return total;
+  }
+
+  const modal = document.getElementById('modal');
+  document.getElementById('checkout').onclick = () => {
+    const lines = [...order].map(([n, it]) => `${it.qty}x ${n} — ${brl(it.qty * it.price)}`);
+    document.getElementById('msg').textContent = `Olá, Sabor da Serra! Quero fazer um pedido:\n\n${lines.join('\n')}\n\nTotal: ${brl(updateBag())}\nEntrega ou retirada: `;
+    modal.classList.add('open');
+  };
+  document.getElementById('close').onclick = () => modal.classList.remove('open');
+  document.getElementById('clear').onclick = () => { order.clear(); updateBag(); modal.classList.remove('open'); };
+  modal.addEventListener('click', (e) => e.target === modal && modal.classList.remove('open'));
+  addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.remove('open'));
+</script>
+</body>
+</html>
