@@ -1,9 +1,60 @@
+import { useState } from 'react';
 import { Download, Printer } from 'lucide-react';
 import { EDUCATION, EXPERIENCE, FAQ, PROFILE, SERVICES, SKILLS, type Job } from '../data';
 import { formatDuration, formatMonth } from '../hooks';
 import { Section, btn } from './ui';
 
 type Item = { title: string; text: string };
+
+/** Botão "ver mais" que só existe no celular; em telas maiores o conteúdo já aparece inteiro. */
+function MoreButton({ open, onClick, more, less }: { open: boolean; onClick: () => void; more: string; less: string }) {
+  return (
+    <button type="button" onClick={onClick} aria-expanded={open} className="link no-print mt-3 text-[15px] font-semibold sm:hidden">
+      {open ? less : more}
+    </button>
+  );
+}
+
+function JobHighlights({ items }: { items: string[] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <ul className={`mt-3 list-disc space-y-1 pl-5 leading-relaxed text-muted marker:text-subtle ${open ? '' : 'max-sm:hidden'}`}>
+        {items.map((h) => (
+          <li key={h}>{h}</li>
+        ))}
+      </ul>
+      <MoreButton open={open} onClick={() => setOpen(!open)} more="Ver o que eu fazia" less="Mostrar menos" />
+    </>
+  );
+}
+
+const SKILLS_SHOWN = 3;
+
+function SkillGroup({ group, items }: { group: string; items: { name: string; level: string }[] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <h3 className="mb-2 text-lg font-semibold text-fg">{group}</h3>
+      <ul>
+        {items.map((s, i) => (
+          <li
+            key={s.name}
+            className={`flex items-baseline justify-between gap-3 border-t border-line py-2.5 text-[15px] ${
+              !open && i >= SKILLS_SHOWN ? 'max-sm:hidden' : ''
+            }`}
+          >
+            <span className="text-fg">{s.name}</span>
+            <span className="shrink-0 text-sm text-subtle">{s.level.toLowerCase()}</span>
+          </li>
+        ))}
+      </ul>
+      {items.length > SKILLS_SHOWN && (
+        <MoreButton open={open} onClick={() => setOpen(!open)} more={`Ver todas as ${items.length}`} less="Mostrar menos" />
+      )}
+    </div>
+  );
+}
 
 /** Lista simples de serviços: título e explicação, separados por uma linha. */
 export function ServiceList({ items, columns = false }: { items: readonly Item[]; columns?: boolean }) {
@@ -128,13 +179,7 @@ export function Experience() {
                 <h3 className="text-xl font-semibold text-fg">{job.role}</h3>
                 <p className="mt-0.5 font-medium text-muted">{job.company}</p>
                 {job.summary && <p className="mt-3 leading-relaxed text-muted">{job.summary}</p>}
-                {job.highlights && (
-                  <ul className="mt-3 list-disc space-y-1 pl-5 leading-relaxed text-muted marker:text-subtle">
-                    {job.highlights.map((h) => (
-                      <li key={h}>{h}</li>
-                    ))}
-                  </ul>
-                )}
+                {job.highlights && <JobHighlights items={job.highlights} />}
                 <p className="mt-3 text-sm text-subtle">{job.tags.join(', ')}</p>
               </div>
             </article>
@@ -153,19 +198,9 @@ export function Skills() {
       intro="O que eu uso no dia a dia e o quanto domino cada coisa."
       band
     >
-      <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
         {SKILLS.map((g) => (
-          <div key={g.group}>
-            <h3 className="mb-2 text-lg font-semibold text-fg">{g.group}</h3>
-            <ul>
-              {g.items.map((s) => (
-                <li key={s.name} className="flex items-baseline justify-between gap-3 border-t border-line py-2.5 text-[15px]">
-                  <span className="text-fg">{s.name}</span>
-                  <span className="shrink-0 text-sm text-subtle">{s.level.toLowerCase()}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <SkillGroup key={g.group} group={g.group} items={g.items} />
         ))}
       </div>
 
