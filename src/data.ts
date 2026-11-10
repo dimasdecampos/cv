@@ -572,6 +572,39 @@ export const DEV_PROJECTS: DevProject[] = [
     tech: ['Next.js', 'JavaScript', 'Supabase', 'Realtime', 'Vercel'],
     url: 'https://estoura.vercel.app/',
   },
+  {
+    id: 'fotos',
+    title: 'Galeria de Fotografia',
+    kind: 'Site de portfólio · Fotografia',
+    image: 'projetos/dev/fotos.webp',
+    description:
+      'Minha galeria de fotos de natureza. Basta colocar a foto em uma pasta do Google Drive: o site busca, redimensiona e publica sozinho, de hora em hora.',
+    highlights: ['Sincroniza com o Google Drive', 'Destaques marcados com estrela', 'Últimas publicações do Instagram'],
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'Python', 'GitHub Actions', 'Google Apps Script'],
+    url: 'https://dimasdecampos.github.io/fotos/',
+  },
+];
+
+// Galeria de fotografia (repositório "fotos"). A seção do site lê data/galeria.json de lá;
+// esta seleção fixa é só o ponto de partida, usado no HTML pré-renderizado.
+export const PHOTO_GALLERY = 'https://dimasdecampos.github.io/fotos/';
+
+export interface Photo {
+  id: string;
+  cat: string;
+  ratio: number;
+}
+
+export const PHOTOS_START: Photo[] = [
+  { id: '1EQEU7g6R1BiZs1oAkt71ThsRqNU5bxFu', cat: 'Paisagens', ratio: 1.51 },
+  { id: '1g6sV8D0IqdHmQHjtULJHhj-F-_mUj700', cat: 'Paisagens', ratio: 1.51 },
+  { id: '1XKvgopqbXB1zI-NBQWXTOMiOdEMk_bAC', cat: 'Cachoeiras', ratio: 1.51 },
+  { id: '1VYdveAdZdQHGokhs1FuGOdqHSiQ0H_WD', cat: 'Passaros', ratio: 1.51 },
+  { id: '1gCMB_jtWEqS_9270hQH7UNcoGkzMcKRK', cat: 'Mar', ratio: 1.33 },
+  { id: '1sv5AKwofdTEWGXmDRt0emO886Bnq4a6Q', cat: 'Cachoeiras', ratio: 1.51 },
+  { id: '1iSkwh9JXD2IBpkagtETew6fmNARLxu-7', cat: 'Paisagens', ratio: 1.51 },
+  { id: '1Ma11_UKFTJv_e0nJgyTtGFiLISCP7jZg', cat: 'Passaros', ratio: 1.51 },
+  { id: '1TZ4TCoxpzCfi6VYSsK35-56xDrzCYOZe', cat: 'Mar', ratio: 1.51 },
 ];
 
 // Sites de demonstração (negócios fictícios), em public/modelos/

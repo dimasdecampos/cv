@@ -3,16 +3,12 @@ import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
 import { CATEGORIES, PROJECTS, whatsappLink, type Category, type Project } from '../data';
 import { Section, btn } from './ui';
 
-const FIRST = 6;
-
 export function Portfolio() {
   const [filter, setFilter] = useState<'all' | Category>('all');
-  const [showAll, setShowAll] = useState(false);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const inFilter = filter === 'all' ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
-  const visible = showAll ? inFilter : inFilter.slice(0, FIRST);
-  const hidden = inFilter.length - visible.length;
+  const visible = filter === 'all' ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
+  const count = (id: 'all' | Category) => (id === 'all' ? PROJECTS.length : PROJECTS.filter((p) => p.category === id).length);
 
   return (
     <Section
@@ -29,15 +25,12 @@ export function Portfolio() {
             type="button"
             role="tab"
             aria-selected={filter === c.id}
-            onClick={() => {
-              setFilter(c.id);
-              setShowAll(false);
-            }}
+            onClick={() => setFilter(c.id)}
             className={`-mb-px border-b-2 pb-3 text-[15px] font-medium transition-colors ${
               filter === c.id ? 'border-accent text-fg' : 'border-transparent text-muted hover:text-fg'
             }`}
           >
-            {c.label}
+            {c.label} <span className="font-normal text-subtle">({count(c.id)})</span>
           </button>
         ))}
       </div>
@@ -65,12 +58,6 @@ export function Portfolio() {
           </li>
         ))}
       </ul>
-
-      {hidden > 0 && (
-        <button type="button" onClick={() => setShowAll(true)} className={`${btn.secondary} mt-10`}>
-          Mostrar mais {hidden} projetos
-        </button>
-      )}
 
       {openIndex !== null && (
         <Lightbox projects={visible} index={openIndex} onChange={setOpenIndex} onClose={() => setOpenIndex(null)} />

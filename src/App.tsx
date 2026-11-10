@@ -2,6 +2,7 @@ import { Contact } from './components/Contact';
 import { DevProjects } from './components/DevProjects';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { Photos } from './components/Photos';
 import { Portfolio } from './components/Portfolio';
 import { Experience, Faq, Services, Skills } from './components/Sections';
 import { SitesPage } from './components/SitesPage';
@@ -43,6 +44,7 @@ export default function App({ page = 'home' }: { page?: Page }) {
             <Services />
             <Experience />
             <Skills />
+            <Photos />
             <Faq />
             <Contact
               title="Vamos conversar sobre o seu projeto?"

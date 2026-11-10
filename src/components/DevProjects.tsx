@@ -26,8 +26,8 @@ export function DevProjects({
 }) {
   return (
     <Section id={id} title={title} intro={intro} aside={aside} className="no-print" band={band}>
-      <ul className={`grid gap-x-6 gap-y-12 sm:grid-cols-2 ${full ? '' : 'lg:grid-cols-3'}`}>
-        {(full ? DEV_PROJECTS : DEV_PROJECTS.slice(0, 6)).map((p) => (
+      <ul className={`grid gap-x-6 gap-y-12 sm:grid-cols-2 ${full ? '' : 'lg:grid-cols-4'}`}>
+        {DEV_PROJECTS.map((p) => (
           <li key={p.id} className="flex flex-col">
             <div className="aspect-[16/10] w-full overflow-hidden rounded-lg border border-line bg-band">
               <img
