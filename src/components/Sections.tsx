@@ -1,35 +1,91 @@
-import { GraduationCap, School } from 'lucide-react';
-import { EDUCATION, EXPERIENCE, PILLARS, SKILLS, type Level } from '../data';
+import { Download, Printer } from 'lucide-react';
+import { EDUCATION, EXPERIENCE, FAQ, PROFILE, SERVICES, SKILLS, type Job } from '../data';
 import { formatDuration, formatMonth } from '../hooks';
-import { ICONS, Reveal, Section, Tag } from './ui';
+import { Section, btn } from './ui';
 
-export function About() {
+type Item = { title: string; text: string };
+
+/** Lista simples de serviços: título e explicação, separados por uma linha. */
+export function ServiceList({ items, columns = false }: { items: readonly Item[]; columns?: boolean }) {
+  return (
+    <dl className={columns ? 'grid gap-x-12 md:grid-cols-2' : ''}>
+      {items.map((s) => (
+        <div key={s.title} className="border-t border-line py-5">
+          <dt className="font-display text-lg font-semibold text-fg">{s.title}</dt>
+          <dd className="mt-1.5 leading-relaxed text-muted">{s.text}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+export function Services() {
   return (
     <Section
-      id="sobre"
-      eyebrow="Sobre"
-      title="Rigor analítico com design centrado em quem lê o dado"
-      intro="Muito dashboard é tecnicamente sólido mas difícil de ler, ou bonito mas impreciso. Meu trabalho junta os dois lados: modelos dimensionais com DAX otimizado e uma interface que faz o executivo entender o número em segundos."
+      id="servicos"
+      title="Serviços de Power BI, dados e desenvolvimento"
+      intro="Muito dashboard é sólido por dentro e difícil de ler, ou bonito e impreciso. Eu cuido das duas partes: o modelo de dados e a tela que a pessoa vai usar para decidir."
     >
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {PILLARS.map((p, i) => {
-          const Icon = ICONS[p.icon];
+      <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[1.6fr_1fr]">
+        <div>
+          <h3 className="mb-4 text-xl font-semibold text-fg">Dados e Power BI</h3>
+          <ServiceList items={SERVICES.slice(0, 6)} columns />
+        </div>
+        <div>
+          <h3 className="mb-4 text-xl font-semibold text-fg">Sites e aplicativos</h3>
+          <ServiceList items={SERVICES.slice(6)} />
+          <p className="no-print border-t border-line pt-5">
+            <a href="criacao-de-sites/" className="link font-semibold">
+              Ver a página de criação de sites e apps
+            </a>
+          </p>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+const months = (ym: string) => {
+  const [y, m] = ym.split('-').map(Number);
+  return y * 12 + m;
+};
+const nowYm = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+};
+const jobId = (job: Job) => `exp-${job.start}`;
+
+/** A carreira inteira em uma barra: cada trecho é um emprego, na proporção do tempo. */
+function CareerBar() {
+  const jobs = [...EXPERIENCE].reverse();
+  const tones = ['bg-fg/35', 'bg-fg/50', 'bg-fg/65', 'bg-fg/80'];
+  return (
+    <div className="no-print mb-12 hidden md:block" aria-hidden="true">
+      <div className="flex gap-0.5">
+        {jobs.map((job, i) => {
+          const current = !job.end;
           return (
-            <Reveal
-              key={p.title}
-              delay={i * 80}
-              className="group rounded-2xl border border-line bg-surface p-6 transition hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5"
+            <a
+              key={job.start}
+              href={`#${jobId(job)}`}
+              tabIndex={-1}
+              suppressHydrationWarning
+              style={{ flexGrow: months(job.end ?? nowYm()) - months(job.start) + 1, flexBasis: 0 }}
+              className="group min-w-0"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent transition group-hover:scale-110">
-                <Icon className="h-5 w-5" />
+              <span
+                className={`flex h-11 items-center truncate px-3 text-sm font-semibold transition-opacity group-hover:opacity-85 ${
+                  current ? 'bg-accent text-on-accent' : `${tones[i % tones.length]} text-bg`
+                } ${i === 0 ? 'rounded-l-lg' : ''} ${i === jobs.length - 1 ? 'rounded-r-lg' : ''}`}
+              >
+                <span className="truncate">{job.short}</span>
               </span>
-              <h3 className="mt-5 text-lg font-semibold text-fg">{p.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{p.text}</p>
-            </Reveal>
+              <span className="mt-1.5 block text-sm tabular-nums text-subtle">{job.start.slice(0, 4)}</span>
+            </a>
           );
         })}
       </div>
-    </Section>
+    </div>
   );
 }
 
@@ -37,159 +93,128 @@ export function Experience() {
   return (
     <Section
       id="experiencia"
-      eyebrow="Trajetória"
       title="Experiência como analista de dados e BI"
-      intro="Mais de uma década como analista de BI e Power BI em logística, meios de pagamento e engenharia."
+      intro="Comecei no design e na web, passei pela engenharia tratando dados e mapas, e desde 2019 trabalho só com Business Intelligence."
+      aside={
+        <div className="no-print flex flex-wrap gap-3">
+          <a href={PROFILE.cv} download className={btn.secondary}>
+            <Download className="h-4 w-4" />
+            Baixar currículo
+          </a>
+          <button type="button" onClick={() => window.print()} className={btn.secondary}>
+            <Printer className="h-4 w-4" />
+            Salvar em PDF
+          </button>
+        </div>
+      }
     >
-      <ol className="relative space-y-6 before:absolute before:bottom-4 before:left-[19px] before:top-4 before:w-px before:bg-line sm:before:left-[23px]">
-        {EXPERIENCE.map((job, i) => {
-          const current = !job.end;
-          return (
-            <Reveal as="li" key={job.company + job.start} className="relative pl-12 sm:pl-16">
-              <span
-                className={`absolute left-2.5 top-6 flex h-[19px] w-[19px] items-center justify-center rounded-full border-2 bg-bg sm:left-3.5 ${
-                  current ? 'border-accent' : 'border-line'
-                }`}
-                aria-hidden="true"
-              >
-                <span className={`h-2 w-2 rounded-full ${current ? 'bg-accent' : 'bg-subtle'}`} />
-              </span>
-
-              <article className="rounded-2xl border border-line bg-surface p-5 transition hover:border-accent/40 sm:p-7">
-                <header className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                  <div>
-                    <h3 className="text-lg font-semibold text-fg sm:text-xl">{job.role}</h3>
-                    <p className="mt-0.5 text-sm font-medium text-accent">
-                      {job.company}
-                      {job.type && <span className="text-subtle"> · {job.type}</span>}
-                    </p>
-                  </div>
-                  <div className="shrink-0 text-left sm:text-right">
-                    {current && (
-                      <span className="mb-1 inline-block rounded-full bg-accent-soft px-2 py-0.5 text-[11px] font-semibold text-accent">
-                        Atual
-                      </span>
-                    )}
-                    <p className="font-mono text-xs tabular-nums text-muted">
-                      {formatMonth(job.start)} – {job.end ? formatMonth(job.end) : 'hoje'}
-                    </p>
-                    <p className="font-mono text-xs text-subtle" suppressHydrationWarning>
-                      {i === EXPERIENCE.length - 1 ? job.location : `${formatDuration(job.start, job.end)} · ${job.location}`}
-                    </p>
-                  </div>
-                </header>
-
-                {job.summary && <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted sm:text-base">{job.summary}</p>}
-
+      <CareerBar />
+      <ol>
+        {EXPERIENCE.map((job, i) => (
+          <li key={job.start} id={jobId(job)} className="scroll-mt-24 border-t border-line py-8">
+            <article className="grid gap-x-10 gap-y-3 md:grid-cols-[200px_1fr]">
+              <p className="text-sm leading-relaxed text-subtle">
+                <span className="block font-medium tabular-nums text-fg">
+                  {formatMonth(job.start)} a {job.end ? formatMonth(job.end) : 'hoje'}
+                </span>
+                {i < EXPERIENCE.length - 1 && (
+                  <span className="block" suppressHydrationWarning>
+                    {formatDuration(job.start, job.end)}
+                  </span>
+                )}
+                <span className="block">{job.location.replace(' · ', ', ')}</span>
+              </p>
+              <div className="max-w-3xl">
+                <h3 className="text-xl font-semibold text-fg">{job.role}</h3>
+                <p className="mt-0.5 font-medium text-muted">{job.company}</p>
+                {job.summary && <p className="mt-3 leading-relaxed text-muted">{job.summary}</p>}
                 {job.highlights && (
-                  <ul className="mt-4 grid gap-x-8 gap-y-2 text-sm text-muted md:grid-cols-2">
+                  <ul className="mt-3 list-disc space-y-1 pl-5 leading-relaxed text-muted marker:text-subtle">
                     {job.highlights.map((h) => (
-                      <li key={h} className="flex gap-2.5">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-                        <span>{h}</span>
-                      </li>
+                      <li key={h}>{h}</li>
                     ))}
                   </ul>
                 )}
-
-                <div className="mt-5 flex flex-wrap gap-1.5">
-                  {job.tags.map((t) => (
-                    <Tag key={t}>{t}</Tag>
-                  ))}
-                </div>
-              </article>
-            </Reveal>
-          );
-        })}
+                <p className="mt-3 text-sm text-subtle">{job.tags.join(', ')}</p>
+              </div>
+            </article>
+          </li>
+        ))}
       </ol>
     </Section>
   );
 }
 
-const LEVEL_DOTS: Record<Level, number> = { Avançado: 3, Proficiente: 2, Intermediário: 1 };
-
 export function Skills() {
   return (
     <Section
       id="habilidades"
-      eyebrow="Habilidades"
-      title="Competências em Power BI, SQL e dados"
-      intro="Nível de domínio em cada ferramenta, do dado bruto à interface."
-      className="bg-surface-2/50"
-      aside={
-        <div className="flex gap-4 text-xs text-subtle" aria-hidden="true">
-          {(Object.keys(LEVEL_DOTS) as Level[]).map((l) => (
-            <span key={l} className="inline-flex items-center gap-1.5">
-              <Dots n={LEVEL_DOTS[l]} />
-              {l}
-            </span>
-          ))}
-        </div>
-      }
+      title="Competências em Power BI, SQL e desenvolvimento"
+      intro="O que eu uso no dia a dia e o quanto domino cada coisa."
+      band
     >
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {SKILLS.map((group, i) => {
-          const Icon = ICONS[group.icon];
-          return (
-            <Reveal key={group.group} delay={i * 80} className="rounded-2xl border border-line bg-surface p-6">
-              <div className="flex items-center gap-3 border-b border-line pb-4">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft text-accent">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <h3 className="text-lg font-semibold text-fg">{group.group}</h3>
-              </div>
-              <ul className="mt-2 divide-y divide-line/70">
-                {group.items.map((s) => (
-                  <li key={s.name} className="flex items-center justify-between gap-3 py-2.5 text-sm">
-                    <span className="text-fg">{s.name}</span>
-                    <span className="flex items-center gap-2" title={s.level}>
-                      <span className="sr-only">{s.level}</span>
-                      <Dots n={LEVEL_DOTS[s.level]} />
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          );
-        })}
+      <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        {SKILLS.map((g) => (
+          <div key={g.group}>
+            <h3 className="mb-2 text-lg font-semibold text-fg">{g.group}</h3>
+            <ul>
+              {g.items.map((s) => (
+                <li key={s.name} className="flex items-baseline justify-between gap-3 border-t border-line py-2.5 text-[15px]">
+                  <span className="text-fg">{s.name}</span>
+                  <span className="shrink-0 text-sm text-subtle">{s.level.toLowerCase()}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
+
+      <h3 id="formacao" className="mb-2 mt-16 scroll-mt-24 text-2xl font-bold text-fg">
+        Formação
+      </h3>
+      <ul>
+        {EDUCATION.map((e) => (
+          <li key={e.title} className="grid gap-x-10 gap-y-1 border-t border-line py-5 md:grid-cols-[200px_1fr]">
+            <p className="text-sm text-subtle">
+              <span className="block font-medium text-fg">{e.period}</span>
+              {e.kind}
+            </p>
+            <div>
+              <p className="font-display text-lg font-semibold text-fg">{e.title}</p>
+              <p className="text-muted">{e.school}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </Section>
   );
 }
 
-function Dots({ n }: { n: number }) {
+export function FaqList({ items }: { items: readonly { q: string; a: string }[] }) {
   return (
-    <span className="flex gap-1" aria-hidden="true">
-      {[1, 2, 3].map((d) => (
-        <span key={d} className={`h-2 w-2 rounded-full ${d <= n ? 'bg-accent' : 'bg-line'}`} />
+    <div className="max-w-3xl border-b border-line">
+      {items.map((item, i) => (
+        <details key={item.q} className="group border-t border-line" open={i === 0}>
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 [&::-webkit-details-marker]:hidden">
+            <h3 className="text-lg font-semibold text-fg group-hover:underline">{item.q}</h3>
+            <span className="shrink-0 text-2xl leading-none text-subtle group-open:hidden" aria-hidden="true">
+              +
+            </span>
+            <span className="hidden shrink-0 text-2xl leading-none text-subtle group-open:block" aria-hidden="true">
+              −
+            </span>
+          </summary>
+          <p className="pb-6 pr-8 leading-relaxed text-muted">{item.a}</p>
+        </details>
       ))}
-    </span>
+    </div>
   );
 }
 
-export function Education() {
+export function Faq() {
   return (
-    <Section id="formacao" eyebrow="Formação" title="Formação acadêmica" className="bg-surface-2/50">
-      <div className="grid gap-4 md:grid-cols-2">
-        {EDUCATION.map((e, i) => {
-          const Icon = i === 0 ? GraduationCap : School;
-          return (
-            <Reveal key={e.title} delay={i * 80} className="flex gap-5 rounded-2xl border border-line bg-surface p-6">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
-                <Icon className="h-6 w-6" />
-              </span>
-              <div>
-                <p className="font-mono text-xs text-subtle">
-                  {e.kind} · {e.period}
-                </p>
-                <h3 className="mt-1 text-lg font-semibold text-fg">{e.title}</h3>
-                <p className="text-sm font-medium text-accent">{e.school}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{e.text}</p>
-              </div>
-            </Reveal>
-          );
-        })}
-      </div>
+    <Section id="faq" title="Perguntas frequentes sobre freelancer de Power BI" className="no-print">
+      <FaqList items={FAQ} />
     </Section>
   );
 }

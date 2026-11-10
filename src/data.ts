@@ -24,19 +24,16 @@ export const whatsappLink = (text?: string) =>
   `https://wa.me/${PROFILE.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ''}`;
 
 export const NAV = [
-  { id: 'sobre', label: 'Sobre' },
-  { id: 'servicos', label: 'Freelancer' },
-  { id: 'experiencia', label: 'Experiência' },
-  { id: 'habilidades', label: 'Habilidades' },
   { id: 'portfolio', label: 'Portfólio' },
+  { id: 'servicos', label: 'Serviços' },
+  { id: 'experiencia', label: 'Experiência' },
   { id: 'contato', label: 'Contato' },
 ] as const;
 
 export const SITES_NAV = [
-  { id: 'servicos', label: 'Serviços' },
   { id: 'projetos', label: 'Projetos' },
+  { id: 'servicos', label: 'Serviços' },
   { id: 'modelos', label: 'Modelos' },
-  { id: 'como-funciona', label: 'Como funciona' },
   { id: 'faq', label: 'Dúvidas' },
   { id: 'contato', label: 'Contato' },
 ] as const;
@@ -143,6 +140,8 @@ export const PILLARS = [
 export interface Job {
   role: string;
   company: string;
+  /** nome curto, usado na linha do tempo */
+  short: string;
   type?: string;
   location: string;
   /** formato AAAA-MM */
@@ -158,6 +157,7 @@ export const EXPERIENCE: Job[] = [
   {
     role: 'Analista de Power BI Sênior',
     company: 'levva',
+    short: 'levva',
     type: 'Tempo integral',
     location: 'Campinas, SP · Remoto',
     start: '2023-04',
@@ -168,6 +168,7 @@ export const EXPERIENCE: Job[] = [
   {
     role: 'Analista de Business Intelligence',
     company: 'Sotran Logística',
+    short: 'Sotran',
     type: 'Tempo integral',
     location: 'São Paulo, SP',
     start: '2021-03',
@@ -185,6 +186,7 @@ export const EXPERIENCE: Job[] = [
   {
     role: 'Analista de BI',
     company: 'Edenred Brasil | Repom S/A',
+    short: 'Edenred',
     location: 'Barueri, SP',
     start: '2019-06',
     end: '2021-03',
@@ -199,6 +201,7 @@ export const EXPERIENCE: Job[] = [
   {
     role: 'Técnico em Desapropriação Sênior',
     company: 'Alta Engenharia de Infraestrutura',
+    short: 'Alta Engenharia',
     location: 'São Paulo, SP',
     start: '2010-09',
     end: '2019-04',
@@ -209,6 +212,7 @@ export const EXPERIENCE: Job[] = [
   {
     role: 'Design gráfico, web e comunicação',
     company: 'UFRB (Proext e TOPA) · Bentivi Web Design',
+    short: 'Design e web',
     location: 'Cruz das Almas, BA',
     start: '2008-01',
     end: '2010-08',

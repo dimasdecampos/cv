@@ -1,84 +1,79 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
 import { CATEGORIES, PROJECTS, whatsappLink, type Category, type Project } from '../data';
-import { Section, Tag, btn } from './ui';
+import { Section, btn } from './ui';
+
+const FIRST = 6;
 
 export function Portfolio() {
   const [filter, setFilter] = useState<'all' | Category>('all');
+  const [showAll, setShowAll] = useState(false);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const visible = filter === 'all' ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
-  const count = (id: 'all' | Category) => (id === 'all' ? PROJECTS.length : PROJECTS.filter((p) => p.category === id).length);
+  const inFilter = filter === 'all' ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
+  const visible = showAll ? inFilter : inFilter.slice(0, FIRST);
+  const hidden = inFilter.length - visible.length;
 
   return (
     <Section
       id="portfolio"
-      eyebrow="Portfólio"
       title="Portfólio de dashboards Power BI"
-      intro="Dashboards, componentes em SVG e interfaces web. Clique em um projeto para ampliar."
+      intro="Painéis que criei para áreas comerciais, logística, meios de pagamento e engenharia, além de ícones em SVG e sistemas web. Clique em uma imagem para ampliar."
       className="no-print"
-      aside={
-        <div role="tablist" aria-label="Filtrar projetos" className="no-print flex flex-wrap gap-1 rounded-xl border border-line bg-surface p-1">
-          {CATEGORIES.map((c) => (
-            <button
-              key={c.id}
-              type="button"
-              role="tab"
-              aria-selected={filter === c.id}
-              onClick={() => setFilter(c.id)}
-              className={`rounded-lg px-3.5 py-2 text-sm font-medium transition ${
-                filter === c.id ? 'bg-accent text-on-accent shadow-sm' : 'text-muted hover:text-fg'
-              }`}
-            >
-              {c.label} <span className="opacity-60">{count(c.id)}</span>
-            </button>
-          ))}
-        </div>
-      }
+      band
     >
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {visible.map((p, i) => (
+      <div role="tablist" aria-label="Filtrar projetos" className="mb-8 flex flex-wrap gap-x-6 gap-y-2 border-b border-line">
+        {CATEGORIES.map((c) => (
           <button
-            key={p.id}
+            key={c.id}
             type="button"
-            onClick={() => setOpenIndex(i)}
-            className="group animate-pop-in flex flex-col overflow-hidden rounded-2xl border border-line bg-surface text-left transition hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5"
-            style={{ animationDelay: `${Math.min(i, 8) * 40}ms` }}
+            role="tab"
+            aria-selected={filter === c.id}
+            onClick={() => {
+              setFilter(c.id);
+              setShowAll(false);
+            }}
+            className={`-mb-px border-b-2 pb-3 text-[15px] font-medium transition-colors ${
+              filter === c.id ? 'border-accent text-fg' : 'border-transparent text-muted hover:text-fg'
+            }`}
           >
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface-2">
-              <img
-                src={p.image}
-                alt={`${p.title}: ${p.label}, projeto de Dimas de Campos`}
-                loading="lazy"
-                decoding="async"
-                className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
-              />
-              <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg bg-black/60 text-white opacity-0 backdrop-blur transition group-hover:opacity-100">
-                <Maximize2 className="h-3.5 w-3.5" />
-              </span>
-            </div>
-            <div className="flex flex-1 flex-col p-5">
-              <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-accent">{p.label}</p>
-              <h3 className="mt-1.5 text-base font-semibold text-fg">{p.title}</h3>
-              <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">{p.description}</p>
-              <div className="mt-auto flex flex-wrap gap-1.5 pt-4">
-                {p.tech.slice(0, 3).map((t) => (
-                  <Tag key={t}>{t}</Tag>
-                ))}
-                {p.tech.length > 3 && <span className="self-center text-[11px] text-subtle">+{p.tech.length - 3}</span>}
-              </div>
-            </div>
+            {c.label}
           </button>
         ))}
       </div>
 
+      <ul className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        {visible.map((p, i) => (
+          <li key={p.id}>
+            <button type="button" onClick={() => setOpenIndex(i)} className="group block w-full text-left">
+              <span className="relative block aspect-[16/10] w-full overflow-hidden rounded-lg border border-line bg-bg">
+                <img
+                  src={p.image}
+                  alt={`${p.title}: ${p.label}, projeto de Dimas de Campos`}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover object-top"
+                />
+                <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-md bg-fg px-2.5 py-1.5 text-xs font-semibold text-bg opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                  <Maximize2 className="h-3.5 w-3.5" />
+                  Ampliar
+                </span>
+              </span>
+              <span className="mt-3 block font-display text-lg font-semibold leading-snug text-fg group-hover:underline">{p.title}</span>
+              <span className="mt-1 block text-sm text-muted">{p.tech.slice(0, 3).join(', ')}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {hidden > 0 && (
+        <button type="button" onClick={() => setShowAll(true)} className={`${btn.secondary} mt-10`}>
+          Mostrar mais {hidden} projetos
+        </button>
+      )}
+
       {openIndex !== null && (
-        <Lightbox
-          projects={visible}
-          index={openIndex}
-          onChange={setOpenIndex}
-          onClose={() => setOpenIndex(null)}
-        />
+        <Lightbox projects={visible} index={openIndex} onChange={setOpenIndex} onClose={() => setOpenIndex(null)} />
       )}
     </Section>
   );
@@ -123,26 +118,26 @@ function Lightbox({
 
   return (
     <div
-      className="animate-fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-3 backdrop-blur-sm sm:p-6"
+      className="animate-fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-3 sm:p-6"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="lightbox-title"
     >
       <div
-        className="animate-pop-in relative flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl"
+        className="relative flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-lg bg-bg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between gap-4 border-b border-line px-5 py-3">
           <div className="min-w-0">
-            <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-accent">{p.label}</p>
             <h3 id="lightbox-title" className="truncate text-base font-semibold text-fg sm:text-lg">
               {p.title}
             </h3>
+            <p className="truncate text-sm text-muted">{p.label.replace(' · ', ', ')}</p>
           </div>
           <div className="flex shrink-0 items-center gap-2">
-            <span className="font-mono text-xs text-subtle">
-              {index + 1}/{projects.length}
+            <span className="text-sm tabular-nums text-subtle">
+              {index + 1} de {projects.length}
             </span>
             <button ref={closeRef} type="button" onClick={onClose} className={btn.icon} aria-label="Fechar">
               <X className="h-4 w-4" />
@@ -150,14 +145,14 @@ function Lightbox({
           </div>
         </div>
 
-        <div className="relative flex min-h-0 flex-1 items-center justify-center bg-surface-2">
+        <div className="relative flex min-h-0 flex-1 items-center justify-center bg-band">
           <img key={p.id} src={p.image} alt={p.title} className="animate-fade-in max-h-[62vh] w-auto max-w-full object-contain" />
           {projects.length > 1 && (
             <>
               <button
                 type="button"
                 onClick={prev}
-                className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur transition hover:bg-black/80"
+                className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white transition-colors hover:bg-black"
                 aria-label="Projeto anterior"
               >
                 <ChevronLeft className="h-5 w-5" />
@@ -165,7 +160,7 @@ function Lightbox({
               <button
                 type="button"
                 onClick={next}
-                className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur transition hover:bg-black/80"
+                className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white transition-colors hover:bg-black"
                 aria-label="Próximo projeto"
               >
                 <ChevronRight className="h-5 w-5" />
@@ -177,12 +172,8 @@ function Lightbox({
         <div className="flex flex-col gap-4 overflow-y-auto p-5 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
             <p className="text-sm leading-relaxed text-muted">{p.description}</p>
-            {p.highlight && <p className="mt-2 text-sm font-semibold text-accent">{p.highlight}</p>}
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {p.tech.map((t) => (
-                <Tag key={t}>{t}</Tag>
-              ))}
-            </div>
+            {p.highlight && <p className="mt-2 text-sm font-semibold text-fg">{p.highlight}</p>}
+            <p className="mt-2 text-sm text-subtle">{p.tech.join(', ')}</p>
           </div>
           <a
             href={whatsappLink(`Olá Dimas! Vi o projeto "${p.title}" no seu portfólio e gostaria de saber mais.`)}
@@ -190,8 +181,7 @@ function Lightbox({
             rel="noopener noreferrer"
             className={`${btn.primary} shrink-0`}
           >
-            Falar sobre este projeto
-            <ArrowUpRight className="h-4 w-4" />
+            Quero algo parecido
           </a>
         </div>
       </div>

@@ -1,35 +1,35 @@
 import type { ReactNode } from 'react';
-import { ArrowUpRight, Check, Clock, MonitorSmartphone } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { DEMO_SITES, DEV_PROJECTS } from '../data';
-import { Reveal, Section, Tag, btn } from './ui';
+import { Section } from './ui';
 
-/** `base` corrige os caminhos relativos das imagens em páginas fora da raiz (ex.: "../"). */
+/**
+ * `base` corrige os caminhos relativos das imagens em páginas fora da raiz (ex.: "../").
+ * `full` mostra também os destaques e as tecnologias de cada projeto.
+ */
 export function DevProjects({
   base = '',
   id = 'sites-e-apps',
   title = 'Sites, sistemas e aplicativos que desenvolvi',
-  intro = 'Projetos reais e no ar: aplicativos, marketplaces, painéis em tempo real e sites para pequenos negócios.',
+  intro = 'Aplicativos, um marketplace, um painel em tempo real e sites para pequenos negócios. Quase todos estão no ar: é só abrir e usar.',
   aside,
-  className = '',
+  full = false,
+  band = false,
 }: {
   base?: string;
   id?: string;
   title?: string;
   intro?: string;
   aside?: ReactNode;
-  className?: string;
+  full?: boolean;
+  band?: boolean;
 }) {
   return (
-    <Section id={id} eyebrow="Sites & Apps" title={title} intro={intro} aside={aside} className={`no-print ${className}`}>
-      <ul className="grid gap-6 md:grid-cols-2">
-        {DEV_PROJECTS.map((p, i) => (
-          <Reveal
-            as="li"
-            key={p.id}
-            delay={(i % 2) * 80}
-            className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface transition hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5"
-          >
-            <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-surface-2">
+    <Section id={id} title={title} intro={intro} aside={aside} className="no-print" band={band}>
+      <ul className={`grid gap-x-6 gap-y-12 sm:grid-cols-2 ${full ? '' : 'lg:grid-cols-3'}`}>
+        {(full ? DEV_PROJECTS : DEV_PROJECTS.slice(0, 6)).map((p) => (
+          <li key={p.id} className="flex flex-col">
+            <div className="aspect-[16/10] w-full overflow-hidden rounded-lg border border-line bg-band">
               <img
                 src={base + p.image}
                 alt={`${p.title}: ${p.kind}, desenvolvido por Dimas de Campos`}
@@ -37,45 +37,42 @@ export function DevProjects({
                 decoding="async"
                 width={1280}
                 height={800}
-                className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
+                className="h-full w-full object-cover object-top"
               />
             </div>
-            <div className="flex flex-1 flex-col p-6">
-              <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-accent">{p.kind}</p>
-              <h3 className="mt-1.5 text-xl font-semibold text-fg">{p.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{p.description}</p>
-              <ul className="mt-4 space-y-1.5">
-                {p.highlights.map((h) => (
-                  <li key={h} className="flex items-start gap-2 text-sm text-fg">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                    {h}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {p.tech.map((t) => (
-                  <Tag key={t}>{t}</Tag>
-                ))}
-              </div>
-              <div className="mt-auto pt-5">
-                {p.url ? (
-                  <a href={p.url} target="_blank" rel="noopener" className={btn.secondary}>
-                    Ver projeto no ar
-                    <ArrowUpRight className="h-4 w-4 text-accent" />
-                  </a>
-                ) : (
-                  p.status && (
-                    <span className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface-2 px-4 py-2.5 text-sm font-medium text-muted">
-                      <Clock className="h-4 w-4 text-accent" />
-                      {p.status}
-                    </span>
-                  )
-                )}
-              </div>
-            </div>
-          </Reveal>
+            <h3 className={`mt-4 font-semibold text-fg ${full ? 'text-2xl' : 'text-xl'}`}>{p.title}</h3>
+            <p className="mt-0.5 text-sm text-subtle">{p.kind.replace(' · ', ', ')}</p>
+            <p className="mt-3 leading-relaxed text-muted">{p.description}</p>
+            {full && (
+              <>
+                <ul className="mt-3 list-disc space-y-1 pl-5 text-muted marker:text-subtle">
+                  {p.highlights.map((h) => (
+                    <li key={h}>{h}</li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-sm text-subtle">Feito com {p.tech.join(', ')}</p>
+              </>
+            )}
+            <p className="mt-auto pt-4 text-[15px] font-semibold">
+              {p.url ? (
+                <a href={p.url} target="_blank" rel="noopener" className="link inline-flex items-center gap-1">
+                  Abrir {p.title}
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+              ) : (
+                <span className="font-medium text-subtle">{p.status}</span>
+              )}
+            </p>
+          </li>
         ))}
       </ul>
+      {!full && (
+        <p className="mt-12 border-t border-line pt-6">
+          <a href={`${base}criacao-de-sites/#projetos`} className="link font-semibold">
+            Ver os {DEV_PROJECTS.length} projetos com mais detalhes
+          </a>
+        </p>
+      )}
     </Section>
   );
 }
@@ -84,21 +81,16 @@ export function DemoSites({ base = '' }: { base?: string }) {
   return (
     <Section
       id="modelos"
-      eyebrow="Modelos de demonstração"
       title="Veja como pode ficar o site do seu negócio"
-      intro="Sites de exemplo para negócios fictícios, feitos para mostrar o estilo e as funções. Abra no celular e navegue à vontade."
-      className="no-print bg-surface-2/50"
+      intro="Dois sites de exemplo, de negócios fictícios, para você navegar e testar as funções. Vale abrir no celular."
+      className="no-print"
+      band
     >
-      <ul className="grid gap-6 md:grid-cols-2">
-        {DEMO_SITES.map((d, i) => (
-          <Reveal
-            as="li"
-            key={d.id}
-            delay={i * 80}
-            className="group overflow-hidden rounded-2xl border border-line bg-surface transition hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5"
-          >
-            <a href={base + d.url} target="_blank" rel="noopener" className="block">
-              <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-surface-2">
+      <ul className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
+        {DEMO_SITES.map((d) => (
+          <li key={d.id}>
+            <a href={base + d.url} target="_blank" rel="noopener" className="group block">
+              <div className="aspect-[16/10] w-full overflow-hidden rounded-lg border border-line bg-bg">
                 <img
                   src={base + d.image}
                   alt={`Modelo de site para ${d.title.toLowerCase()}: ${d.name}`}
@@ -106,24 +98,18 @@ export function DemoSites({ base = '' }: { base?: string }) {
                   decoding="async"
                   width={1280}
                   height={800}
-                  className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
+                  className="h-full w-full object-cover object-top"
                 />
-                <span className="absolute left-3 top-3 rounded-lg bg-black/65 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur">
-                  Modelo · negócio fictício
-                </span>
               </div>
-              <div className="flex items-start justify-between gap-4 p-6">
-                <div>
-                  <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-accent">{d.title}</p>
-                  <h3 className="mt-1.5 text-xl font-semibold text-fg">{d.name}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{d.description}</p>
-                </div>
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent transition group-hover:scale-110">
-                  <MonitorSmartphone className="h-5 w-5" />
-                </span>
-              </div>
+              <h3 className="mt-4 text-2xl font-semibold text-fg group-hover:underline">{d.title}</h3>
+              <p className="mt-0.5 text-sm text-subtle">Modelo "{d.name}", negócio fictício</p>
+              <p className="mt-3 leading-relaxed text-muted">{d.description}</p>
+              <p className="link mt-4 inline-flex items-center gap-1 text-[15px] font-semibold">
+                Abrir o modelo
+                <ArrowUpRight className="h-4 w-4" />
+              </p>
             </a>
-          </Reveal>
+          </li>
         ))}
       </ul>
     </Section>

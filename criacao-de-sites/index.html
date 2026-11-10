@@ -11,8 +11,8 @@
     <link rel="canonical" href="https://dimas.space/criacao-de-sites/" />
     <meta name="geo.region" content="BR-SP" />
     <meta name="geo.placename" content="São Paulo" />
-    <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121b2d" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 
     <!-- Prévia ao compartilhar o link (LinkedIn, WhatsApp, X) -->
     <meta property="og:type" content="website" />
@@ -35,22 +35,18 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
     <!-- Aplica o tema antes de renderizar para evitar "piscada" -->
     <script>
       (function () {
         try {
           var t = localStorage.getItem('theme');
-          if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
           if (t === 'dark') document.documentElement.classList.add('dark');
-        } catch (e) {
-          document.documentElement.classList.add('dark');
-        }
+        } catch (e) {}
       })();
     </script>
-    <!-- Sem JavaScript, mostra todo o conteúdo sem animação -->
-    <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 
     <!-- Dados estruturados (schema.org): gerados no build a partir de src/data.ts -->
     <script type="application/ld+json">__JSON_LD__</script>

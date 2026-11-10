@@ -1,11 +1,26 @@
-import { useState } from 'react';
-import { ArrowUpRight, Check, Copy, Linkedin, Mail, MessageCircle } from 'lucide-react';
-import { ContactForm } from './ContactForm';
+import { useState, type ReactNode } from 'react';
 import { PROFILE, SOCIAL, whatsappLink } from '../data';
-import { Reveal, Section, btn } from './ui';
+import { ContactForm } from './ContactForm';
+import { Section } from './ui';
 
-export function Contact() {
+/** Contato: canais diretos à esquerda, formulário à direita. Usado nas duas páginas. */
+export function Contact({
+  title,
+  intro,
+  whatsappText,
+  origem,
+  placeholder,
+  band = false,
+}: {
+  title: ReactNode;
+  intro: string;
+  whatsappText: string;
+  origem: string;
+  placeholder: string;
+  band?: boolean;
+}) {
   const [copied, setCopied] = useState(false);
+
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(PROFILE.email);
@@ -17,68 +32,42 @@ export function Contact() {
   };
 
   return (
-    <Section
-      id="contato"
-      eyebrow="Contato"
-      title={
-        <>
-          Vamos tirar seus dados <span className="text-gradient">do papel?</span>
-        </>
-      }
-      intro="Precisa de um analista de dados ou especialista em Power BI freelancer? Novo painel executivo, modernização de dashboards ou consultoria: me conte o que você precisa."
-      className="bg-surface-2/50"
-    >
-      <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
-        <Reveal className="space-y-3">
-          <a
-            href={whatsappLink('Olá Dimas, gostaria de conversar sobre um projeto de Power BI.')}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-4 rounded-2xl border border-line bg-surface p-5 transition hover:border-accent/50"
-          >
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-soft text-accent">
-              <MessageCircle className="h-5 w-5" />
-            </span>
-            <span className="flex-1">
-              <span className="block text-xs text-subtle">WhatsApp · resposta rápida</span>
-              <span className="block font-mono text-sm font-semibold text-fg">{PROFILE.phoneDisplay}</span>
-            </span>
-            <ArrowUpRight className="h-4 w-4 text-subtle transition group-hover:text-accent" />
-          </a>
-
-          <div className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-soft text-accent">
-              <Mail className="h-5 w-5" />
-            </span>
-            <a href={`mailto:${PROFILE.email}`} className="min-w-0 flex-1">
-              <span className="block text-xs text-subtle">E-mail</span>
-              <span className="block truncate font-mono text-sm font-semibold text-fg">{PROFILE.email}</span>
-            </a>
-            <button type="button" onClick={copyEmail} className={`${btn.icon} no-print`} aria-label="Copiar e-mail">
-              {copied ? <Check className="h-4 w-4 text-accent" /> : <Copy className="h-4 w-4" />}
-            </button>
+    <Section id="contato" title={title} intro={intro} band={band}>
+      <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[1fr_1.3fr]">
+        <dl>
+          <div className="border-t border-line py-5">
+            <dt className="text-sm text-subtle">WhatsApp, o jeito mais rápido</dt>
+            <dd className="mt-1">
+              <a href={whatsappLink(whatsappText)} target="_blank" rel="noopener noreferrer" className="link text-xl font-semibold tabular-nums">
+                {PROFILE.phoneDisplay}
+              </a>
+            </dd>
           </div>
+          <div className="border-t border-line py-5">
+            <dt className="text-sm text-subtle">E-mail</dt>
+            <dd className="mt-1 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <a href={`mailto:${PROFILE.email}`} className="link break-all text-xl font-semibold">
+                {PROFILE.email}
+              </a>
+              <button type="button" onClick={copyEmail} className="no-print text-sm text-muted underline underline-offset-4 hover:text-fg">
+                {copied ? 'Copiado' : 'Copiar'}
+              </button>
+            </dd>
+          </div>
+          <div className="border-y border-line py-5">
+            <dt className="text-sm text-subtle">LinkedIn</dt>
+            <dd className="mt-1">
+              <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" className="link text-xl font-semibold">
+                in/dimasdecampos
+              </a>
+            </dd>
+          </div>
+        </dl>
 
-          <a
-            href={SOCIAL.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-4 rounded-2xl border border-line bg-surface p-5 transition hover:border-accent/50"
-          >
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-soft text-accent">
-              <Linkedin className="h-5 w-5" />
-            </span>
-            <span className="flex-1">
-              <span className="block text-xs text-subtle">LinkedIn</span>
-              <span className="block font-mono text-sm font-semibold text-fg">in/dimasdecampos</span>
-            </span>
-            <ArrowUpRight className="h-4 w-4 text-subtle transition group-hover:text-accent" />
-          </a>
-        </Reveal>
-
-        <Reveal delay={100} className="no-print rounded-2xl border border-line bg-surface p-6 sm:p-8">
-          <ContactForm origem="Contato pelo portfólio (dados / Power BI)" placeholder="Ex.: dashboard de vendas em Power BI" />
-        </Reveal>
+        <div className="no-print">
+          <h3 className="mb-5 text-xl font-semibold text-fg">Ou escreva por aqui</h3>
+          <ContactForm origem={origem} placeholder={placeholder} />
+        </div>
       </div>
     </Section>
   );

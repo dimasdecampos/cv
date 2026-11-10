@@ -6,53 +6,47 @@
 /* Cores semânticas: os utilitários (bg-bg, text-fg, border-line...) leem estas variáveis,
    que mudam entre claro e escuro. */
 @theme inline {
-  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Outfit", "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Bricolage Grotesque", "IBM Plex Sans", system-ui, sans-serif;
 
   --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
+  --color-band: var(--band);
   --color-line: var(--line);
   --color-fg: var(--fg);
   --color-muted: var(--muted);
   --color-subtle: var(--subtle);
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
-  --color-accent-soft: var(--accent-soft);
   --color-on-accent: var(--on-accent);
-  --color-accent-2: var(--accent-2);
+  --color-link: var(--link);
 }
 
+/* Azul-tinta para o texto e amarelo (o do Power BI) para as ações principais */
 :root {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-2: #f1f5f9;
-  --line: #e2e8f0;
-  --fg: #0f172a;
-  --muted: #475569;
-  --subtle: #64748b;
-  --accent: #059669;
-  --accent-strong: #047857;
-  --accent-soft: rgb(5 150 105 / 0.1);
-  --on-accent: #ffffff;
-  --accent-2: #0891b2;
+  --bg: #ffffff;
+  --band: #f2f4f8;
+  --line: #d9dee7;
+  --fg: #14233f;
+  --muted: #45536b;
+  --subtle: #66738a;
+  --accent: #f2c811;
+  --accent-strong: #e0b700;
+  --on-accent: #14233f;
+  --link: #1846c7;
   color-scheme: light;
 }
 
 .dark {
-  --bg: #0b1120;
-  --surface: #111a2e;
-  --surface-2: #17223a;
-  --line: #22304d;
-  --fg: #e8edf5;
-  --muted: #a3b1c6;
-  --subtle: #7d8ba1;
-  --accent: #34d399;
-  --accent-strong: #6ee7b7;
-  --accent-soft: rgb(52 211 153 / 0.12);
-  --on-accent: #052e22;
-  --accent-2: #22d3ee;
+  --bg: #121b2d;
+  --band: #18233a;
+  --line: #2c3a56;
+  --fg: #eef1f6;
+  --muted: #b3bdcd;
+  --subtle: #8b97ab;
+  --accent: #f2c811;
+  --accent-strong: #ffd930;
+  --on-accent: #14233f;
+  --link: #f2c811;
   color-scheme: dark;
 }
 
@@ -64,11 +58,11 @@
 
   body {
     @apply bg-bg font-sans text-fg antialiased;
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4 {
-    @apply font-display tracking-tight;
+    @apply font-display;
+    letter-spacing: -0.015em;
   }
 
   ::selection {
@@ -77,79 +71,47 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--link);
     outline-offset: 3px;
-    border-radius: 6px;
+    border-radius: 4px;
   }
 }
 
-/* Fundo com grade sutil, usado no topo da página */
-.bg-grid {
-  background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--line) 60%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--line) 60%, transparent) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+/* Link de texto */
+.link {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
-
-.text-gradient {
-  background: linear-gradient(100deg, var(--accent) 10%, var(--accent-2) 90%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Entrada suave dos blocos ao rolar */
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
+.link:hover {
+  text-decoration-thickness: 2px;
 }
 
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-@keyframes pop-in {
-  from { opacity: 0; transform: translateY(12px) scale(0.98); }
-  to { opacity: 1; transform: none; }
-}
 .animate-fade-in { animation: fade-in 0.2s ease both; }
-.animate-pop-in { animation: pop-in 0.25s ease both; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
 }
 
-/* Barra de rolagem discreta */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--line); border-radius: 8px; border: 2px solid var(--bg); }
-::-webkit-scrollbar-thumb:hover { background: var(--subtle); }
-
 /* Impressão / "Salvar como PDF": vira um currículo limpo */
 @media print {
   :root, .dark {
-    --bg: #fff; --surface: #fff; --surface-2: #fff; --line: #d4d4d8;
-    --fg: #000; --muted: #333; --subtle: #555; --accent: #047857; --accent-2: #0e7490;
+    --bg: #fff; --band: #fff; --line: #c9c9c9;
+    --fg: #000; --muted: #333; --subtle: #555; --link: #000;
   }
   .no-print { display: none !important; }
-  .reveal, .animate-pop-in, .animate-fade-in {
-    opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important;
-  }
-  .bg-grid { display: none; }
   #inicio { padding-top: 0 !important; }
-  section { padding-top: 1.25rem !important; padding-bottom: 1.25rem !important; break-inside: auto; }
+  section { padding-top: 1rem !important; padding-bottom: 1rem !important; break-inside: auto; }
   article, li { break-inside: avoid; }
-  a { text-decoration: none; }
+  a { text-decoration: none !important; }
   @page { margin: 14mm; }
 }

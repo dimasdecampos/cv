@@ -5,6 +5,8 @@ import { useActiveSection, useScrolled, useTheme } from '../hooks';
 
 type NavItem = { id: string; label: string };
 
+const HELLO = 'Olá Dimas, vi seu site e gostaria de conversar.';
+
 export function Header({
   nav = NAV,
   link,
@@ -29,33 +31,30 @@ export function Header({
 
   return (
     <header
-      className={`no-print fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
-        scrolled || open ? 'border-b border-line bg-bg/80 backdrop-blur-xl' : 'border-b border-transparent'
+      className={`no-print fixed inset-x-0 top-0 z-40 bg-bg transition-colors ${
+        scrolled || open ? 'border-b border-line' : 'border-b border-transparent'
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <a href="#inicio" className="group flex items-center gap-2.5" aria-label="Ir para o início">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent font-display text-sm font-bold text-on-accent transition group-hover:rotate-6">
-            DC
-          </span>
-          <span className="whitespace-nowrap font-display text-base font-semibold text-fg">{PROFILE.name}</span>
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
+        <a href="#inicio" className="whitespace-nowrap font-display text-lg font-bold text-fg">
+          {PROFILE.name}
         </a>
 
-        <nav className="hidden items-center gap-1 xl:flex" aria-label="Seções">
+        <nav className="hidden items-center gap-6 lg:flex" aria-label="Seções">
           {nav.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
               aria-current={active === item.id ? 'true' : undefined}
-              className={`whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition ${
-                active === item.id ? 'bg-accent-soft text-accent' : 'text-muted hover:text-fg'
+              className={`whitespace-nowrap border-b-2 py-1 text-[15px] font-medium transition-colors ${
+                active === item.id ? 'border-accent text-fg' : 'border-transparent text-muted hover:text-fg'
               }`}
             >
               {item.label}
             </a>
           ))}
           {link && (
-            <a href={link.href} className="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-muted transition hover:text-fg">
+            <a href={link.href} className="link whitespace-nowrap text-[15px] font-medium">
               {link.label}
             </a>
           )}
@@ -65,61 +64,57 @@ export function Header({
           <button
             type="button"
             onClick={toggle}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-line bg-surface text-muted transition hover:text-fg"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-muted transition-colors hover:text-fg"
             aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
             title={theme === 'dark' ? 'Tema claro' : 'Tema escuro'}
           >
-            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {theme === 'dark' ? <Sun className="h-[18px] w-[18px]" /> : <Moon className="h-[18px] w-[18px]" />}
           </button>
           <a
-            href={whatsappLink('Olá Dimas, vi seu portfólio e gostaria de conversar.')}
+            href={whatsappLink(HELLO)}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden whitespace-nowrap rounded-xl bg-accent px-4 py-2 text-sm font-semibold text-on-accent transition hover:bg-accent-strong sm:inline-flex"
+            className="hidden whitespace-nowrap rounded-lg bg-accent px-4 py-2 text-[15px] font-semibold text-on-accent transition-colors hover:bg-accent-strong sm:inline-flex"
           >
-            Vamos conversar
+            Chamar no WhatsApp
           </a>
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-line bg-surface text-fg xl:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-fg lg:hidden"
             aria-label={open ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={open}
             aria-controls="menu-mobile"
           >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
       {open && (
-        <nav id="menu-mobile" className="animate-fade-in border-t border-line px-4 pb-5 pt-3 xl:hidden" aria-label="Seções">
-          <div className="grid grid-cols-2 gap-1">
-            {nav.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={() => setOpen(false)}
-                className={`rounded-lg px-3 py-2.5 text-sm font-medium ${
-                  active === item.id ? 'bg-accent-soft text-accent' : 'text-muted hover:bg-surface-2 hover:text-fg'
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
-            {link && (
-              <a href={link.href} className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted hover:bg-surface-2 hover:text-fg">
-                {link.label}
-              </a>
-            )}
-          </div>
+        <nav id="menu-mobile" className="animate-fade-in border-t border-line px-5 pb-5 pt-2 lg:hidden" aria-label="Seções">
+          {nav.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              onClick={() => setOpen(false)}
+              className="block border-b border-line py-3 text-base font-medium text-fg"
+            >
+              {item.label}
+            </a>
+          ))}
+          {link && (
+            <a href={link.href} className="block border-b border-line py-3 text-base font-medium text-link">
+              {link.label}
+            </a>
+          )}
           <a
-            href={whatsappLink('Olá Dimas, vi seu portfólio e gostaria de conversar.')}
+            href={whatsappLink(HELLO)}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 flex justify-center rounded-xl bg-accent py-2.5 text-sm font-semibold text-on-accent sm:hidden"
+            className="mt-4 flex justify-center rounded-lg bg-accent py-3 text-[15px] font-semibold text-on-accent sm:hidden"
           >
-            Conversar no WhatsApp
+            Chamar no WhatsApp
           </a>
         </nav>
       )}

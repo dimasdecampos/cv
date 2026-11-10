@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 export type Theme = 'light' | 'dark';
 
 export function useTheme() {
-  // Começa em "dark" para bater com o HTML pré-renderizado; o tema real é lido ao montar.
-  const [theme, setTheme] = useState<Theme>('dark');
+  // Começa em "light" para bater com o HTML pré-renderizado; o tema real é lido ao montar.
+  const [theme, setTheme] = useState<Theme>('light');
   const ready = useRef(false);
 
   useEffect(() => {
