@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { DEMO_SITES, DEV_PROJECTS } from '../data';
-import { Section } from './ui';
+import { Section, swipe } from './ui';
 
 /**
  * `base` corrige os caminhos relativos das imagens em páginas fora da raiz (ex.: "../").
@@ -26,9 +26,10 @@ export function DevProjects({
 }) {
   return (
     <Section id={id} title={title} intro={intro} aside={aside} className="no-print" band={band}>
-      <ul className={`grid gap-x-6 gap-y-12 sm:grid-cols-2 ${full ? '' : 'lg:grid-cols-4'}`}>
+      <p className={swipe.hint}>Deslize para o lado para ver os {DEV_PROJECTS.length} projetos.</p>
+      <ul className={`${swipe.list} sm:grid-cols-2 ${full ? '' : 'lg:grid-cols-4'}`}>
         {DEV_PROJECTS.map((p) => (
-          <li key={p.id} className="flex flex-col">
+          <li key={p.id} className={`flex flex-col ${swipe.item}`}>
             <div className="aspect-[16/10] w-full overflow-hidden rounded-lg border border-line bg-band">
               <img
                 src={base + p.image}
@@ -67,7 +68,7 @@ export function DevProjects({
         ))}
       </ul>
       {!full && (
-        <p className="mt-12 border-t border-line pt-6">
+        <p className="mt-6 border-t border-line pt-6 sm:mt-12">
           <a href={`${base}criacao-de-sites/#projetos`} className="link font-semibold">
             Ver os {DEV_PROJECTS.length} projetos com mais detalhes
           </a>

@@ -56,9 +56,9 @@ export function SitesPage() {
 function SitesHero() {
   const live = DEV_PROJECTS.filter((p) => p.url).length;
   return (
-    <section id="inicio" className="pb-16 pt-28 sm:pb-24 sm:pt-36">
+    <section id="inicio" className="pb-12 pt-24 sm:pb-24 sm:pt-36">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <h1 className="max-w-4xl text-[2.5rem] font-extrabold leading-[1.05] text-fg sm:text-6xl">
+        <h1 className="max-w-4xl text-[2.25rem] font-extrabold leading-[1.05] text-fg sm:text-6xl">
           Criação de sites, lojas virtuais e aplicativos para o seu negócio.
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
@@ -66,10 +66,10 @@ function SitesHero() {
           aparecem no Google, e também aplicativos e sistemas sob medida. Atendo todo o Brasil, de forma remota.
         </p>
         <div className="no-print mt-8 flex flex-wrap gap-3">
-          <a href={whatsappLink(QUOTE)} target="_blank" rel="noopener noreferrer" className={btn.primary}>
+          <a href={whatsappLink(QUOTE)} target="_blank" rel="noopener noreferrer" className={`${btn.primary} max-sm:w-full`}>
             Pedir orçamento pelo WhatsApp
           </a>
-          <a href="#projetos" className={btn.secondary}>
+          <a href="#projetos" className={`${btn.secondary} max-sm:w-full`}>
             Ver os {DEV_PROJECTS.length} projetos
           </a>
         </div>

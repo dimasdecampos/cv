@@ -8,7 +8,7 @@ const door =
 
 export function Hero() {
   return (
-    <section id="inicio" className="pb-16 pt-28 sm:pb-24 sm:pt-36">
+    <section id="inicio" className="pb-12 pt-24 sm:pb-24 sm:pt-36">
       <div className="mx-auto grid max-w-6xl items-start gap-8 px-5 sm:px-8 lg:grid-cols-[1fr_300px] lg:gap-16">
         <figure className="order-first lg:order-last">
           <img
@@ -16,7 +16,7 @@ export function Hero() {
             alt={`${PROFILE.name}, analista de dados sênior e especialista em Power BI`}
             width={664}
             height={664}
-            className="h-24 w-24 rounded-lg object-cover lg:h-auto lg:w-full"
+            className="h-20 w-20 rounded-lg object-cover lg:h-auto lg:w-full"
             fetchPriority="high"
           />
           <figcaption className="mt-4 hidden text-sm leading-relaxed text-muted lg:block">
@@ -40,7 +40,7 @@ export function Hero() {
         </figure>
 
         <div>
-          <h1 className="text-[2.5rem] font-extrabold leading-[1.05] text-fg sm:text-6xl">
+          <h1 className="text-[2.25rem] font-extrabold leading-[1.05] text-fg sm:text-6xl">
             Oi, eu sou o Dimas. Faço dashboards em Power BI, sites e aplicativos.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted" suppressHydrationWarning>
@@ -48,7 +48,7 @@ export function Hero() {
             freelancer, atendo empresas de todo o Brasil, de forma remota.
           </p>
 
-          <p className="no-print mt-10 font-semibold text-fg">O que você precisa?</p>
+          <p className="no-print mt-8 font-semibold text-fg sm:mt-10">O que você precisa?</p>
           <div className="no-print mt-3 grid max-w-2xl gap-3 sm:grid-cols-2">
             <a href="#portfolio" className={door}>
               <BarChart3 className="h-6 w-6 shrink-0 text-link" />

@@ -19,12 +19,12 @@ export function Section({
   band?: boolean;
 }) {
   return (
-    <section id={id} className={`scroll-mt-16 py-16 sm:py-24 ${band ? 'bg-band' : ''} ${className}`}>
+    <section id={id} className={`scroll-mt-16 py-12 sm:py-24 ${band ? 'bg-band' : ''} ${className}`}>
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <h2 className="text-3xl font-bold leading-tight text-fg sm:text-[2.5rem]">{title}</h2>
-            {intro && <p className="mt-4 text-lg leading-relaxed text-muted">{intro}</p>}
+            <h2 className="text-[1.75rem] font-bold leading-tight text-fg sm:text-[2.5rem]">{title}</h2>
+            {intro && <p className="mt-3 text-[17px] leading-relaxed text-muted sm:mt-4 sm:text-lg">{intro}</p>}
           </div>
           {aside}
         </div>
@@ -33,6 +33,16 @@ export function Section({
     </section>
   );
 }
+
+/**
+ * No celular a lista vira uma faixa de deslizar para o lado (o próximo item aparece na borda);
+ * a partir de 640px volta a ser uma grade normal.
+ */
+export const swipe = {
+  list: '-mx-5 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-3 sm:mx-0 sm:grid sm:snap-none sm:gap-x-6 sm:gap-y-12 sm:overflow-visible sm:px-0 sm:pb-0',
+  item: 'w-[84%] shrink-0 snap-start sm:w-auto',
+  hint: 'mb-4 text-sm text-subtle sm:hidden',
+};
 
 const base = 'inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-[15px] font-semibold transition-colors';
 

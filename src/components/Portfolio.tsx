@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
 import { CATEGORIES, PROJECTS, whatsappLink, type Category, type Project } from '../data';
-import { Section, btn } from './ui';
+import { Section, btn, swipe } from './ui';
 
 export function Portfolio() {
   const [filter, setFilter] = useState<'all' | Category>('all');
@@ -18,7 +18,7 @@ export function Portfolio() {
       className="no-print"
       band
     >
-      <div role="tablist" aria-label="Filtrar projetos" className="mb-8 flex flex-wrap gap-x-6 gap-y-2 border-b border-line">
+      <div role="tablist" aria-label="Filtrar projetos" className="mb-6 flex gap-x-5 overflow-x-auto border-b border-line sm:mb-8 sm:gap-x-6">
         {CATEGORIES.map((c) => (
           <button
             key={c.id}
@@ -26,7 +26,7 @@ export function Portfolio() {
             role="tab"
             aria-selected={filter === c.id}
             onClick={() => setFilter(c.id)}
-            className={`-mb-px border-b-2 pb-3 text-[15px] font-medium transition-colors ${
+            className={`shrink-0 border-b-2 pb-3 text-[15px] font-medium transition-colors ${
               filter === c.id ? 'border-accent text-fg' : 'border-transparent text-muted hover:text-fg'
             }`}
           >
@@ -35,9 +35,10 @@ export function Portfolio() {
         ))}
       </div>
 
-      <ul className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+      <p className={swipe.hint}>Deslize para o lado para ver os {visible.length} projetos. Toque para ampliar.</p>
+      <ul key={filter} className={`${swipe.list} sm:grid-cols-2 lg:grid-cols-3`}>
         {visible.map((p, i) => (
-          <li key={p.id}>
+          <li key={p.id} className={swipe.item}>
             <button type="button" onClick={() => setOpenIndex(i)} className="group block w-full text-left">
               <span className="relative block aspect-[16/10] w-full overflow-hidden rounded-lg border border-line bg-bg">
                 <img

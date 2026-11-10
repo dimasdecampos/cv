@@ -96,12 +96,12 @@ export function Experience() {
       title="Experiência como analista de dados e BI"
       intro="Comecei no design e na web, passei pela engenharia tratando dados e mapas, e desde 2019 trabalho só com Business Intelligence."
       aside={
-        <div className="no-print flex flex-wrap gap-3">
-          <a href={PROFILE.cv} download className={btn.secondary}>
+        <div className="no-print flex gap-3">
+          <a href={PROFILE.cv} download className={`${btn.secondary} max-sm:flex-1 max-sm:px-3`}>
             <Download className="h-4 w-4" />
             Baixar currículo
           </a>
-          <button type="button" onClick={() => window.print()} className={btn.secondary}>
+          <button type="button" onClick={() => window.print()} className={`${btn.secondary} max-sm:flex-1 max-sm:px-3`}>
             <Printer className="h-4 w-4" />
             Salvar em PDF
           </button>
@@ -111,7 +111,7 @@ export function Experience() {
       <CareerBar />
       <ol>
         {EXPERIENCE.map((job, i) => (
-          <li key={job.start} id={jobId(job)} className="scroll-mt-24 border-t border-line py-8">
+          <li key={job.start} id={jobId(job)} className="scroll-mt-24 border-t border-line py-6 sm:py-8">
             <article className="grid gap-x-10 gap-y-3 md:grid-cols-[200px_1fr]">
               <p className="text-sm leading-relaxed text-subtle">
                 <span className="block font-medium tabular-nums text-fg">
