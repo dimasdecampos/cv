@@ -56,16 +56,35 @@ function SkillGroup({ group, items }: { group: string; items: { name: string; le
   );
 }
 
-/** Lista simples de serviços: título e explicação, separados por uma linha. */
+/**
+ * Lista de serviços: título e explicação, separados por uma linha.
+ * No celular só o título aparece; tocar nele abre a explicação.
+ */
 export function ServiceList({ items, columns = false }: { items: readonly Item[]; columns?: boolean }) {
+  const [open, setOpen] = useState<string | null>(null);
   return (
     <dl className={columns ? 'grid gap-x-12 md:grid-cols-2' : ''}>
-      {items.map((s) => (
-        <div key={s.title} className="border-t border-line py-5">
-          <dt className="font-display text-lg font-semibold text-fg">{s.title}</dt>
-          <dd className="mt-1.5 leading-relaxed text-muted">{s.text}</dd>
-        </div>
-      ))}
+      {items.map((s) => {
+        const isOpen = open === s.title;
+        return (
+          <div key={s.title} className="border-t border-line py-4 sm:py-5">
+            <dt className="font-display text-lg font-semibold text-fg">
+              <button
+                type="button"
+                onClick={() => setOpen(isOpen ? null : s.title)}
+                aria-expanded={isOpen}
+                className="flex w-full items-center justify-between gap-4 text-left sm:pointer-events-none"
+              >
+                {s.title}
+                <span className="shrink-0 text-2xl font-normal leading-none text-subtle sm:hidden" aria-hidden="true">
+                  {isOpen ? '−' : '+'}
+                </span>
+              </button>
+            </dt>
+            <dd className={`mt-1.5 leading-relaxed text-muted ${isOpen ? '' : 'max-sm:hidden'}`}>{s.text}</dd>
+          </div>
+        );
+      })}
     </dl>
   );
 }

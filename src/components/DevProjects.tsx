@@ -87,7 +87,7 @@ export function DemoSites({ base = '' }: { base?: string }) {
       className="no-print"
       band
     >
-      <ul className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
+      <ul className="grid grid-cols-2 gap-x-4 sm:gap-x-6">
         {DEMO_SITES.map((d) => (
           <li key={d.id}>
             <a href={base + d.url} target="_blank" rel="noopener" className="group block">
@@ -102,10 +102,12 @@ export function DemoSites({ base = '' }: { base?: string }) {
                   className="h-full w-full object-cover object-top"
                 />
               </div>
-              <h3 className="mt-4 text-2xl font-semibold text-fg group-hover:underline">{d.title}</h3>
-              <p className="mt-0.5 text-sm text-subtle">Modelo "{d.name}", negócio fictício</p>
-              <p className="mt-3 leading-relaxed text-muted">{d.description}</p>
-              <p className="link mt-4 inline-flex items-center gap-1 text-[15px] font-semibold">
+              <h3 className="mt-3 text-base font-semibold leading-snug text-fg group-hover:underline sm:mt-4 sm:text-2xl">{d.title}</h3>
+              <p className="mt-0.5 text-sm text-subtle">
+                Modelo "{d.name}"<span className="max-sm:hidden">, negócio fictício</span>
+              </p>
+              <p className="mt-3 leading-relaxed text-muted max-sm:hidden">{d.description}</p>
+              <p className="link mt-2 inline-flex sm:mt-4 items-center gap-1 text-[15px] font-semibold">
                 Abrir o modelo
                 <ArrowUpRight className="h-4 w-4" />
               </p>
