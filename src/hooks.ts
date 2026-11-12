@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 export type Theme = 'light' | 'dark';
 
@@ -22,7 +23,16 @@ export function useTheme() {
     }
   }, [theme]);
 
-  return { theme, toggle: () => setTheme((t) => (t === 'dark' ? 'light' : 'dark')) };
+  const toggle = () => {
+    const flip = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+    // Transição suave entre os temas, onde o navegador oferece View Transitions
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+    if (doc.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      doc.startViewTransition(() => flushSync(flip));
+    } else flip();
+  };
+
+  return { theme, toggle };
 }
 
 /** Retorna o id da seção visível no meio da tela, para destacar o menu. */
@@ -101,4 +111,23 @@ export function formatDuration(start: string, end?: string) {
   if (years) parts.push(`${years} ${years === 1 ? 'ano' : 'anos'}`);
   if (months) parts.push(`${months} ${months === 1 ? 'mês' : 'meses'}`);
   return parts.join(' e ');
+}
+
+/** Conta de 0 até `target` quando `run` vira verdadeiro. Antes disso (e sem JavaScript) mostra o valor final. */
+export function useCountUp(target: number, run: boolean, ms = 1100) {
+  const [value, setValue] = useState(target);
+  useEffect(() => {
+    if (!run || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let frame = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / ms);
+      setValue(Math.round(target * (1 - Math.pow(1 - t, 3))));
+      if (t < 1) frame = requestAnimationFrame(tick);
+    };
+    setValue(0);
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [target, run, ms]);
+  return value;
 }

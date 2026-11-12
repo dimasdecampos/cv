@@ -31,10 +31,11 @@ export function Header({
 
   return (
     <header
-      className={`no-print fixed inset-x-0 top-0 z-40 bg-bg transition-colors ${
-        scrolled || open ? 'border-b border-line' : 'border-b border-transparent'
+      className={`no-print fixed inset-x-0 top-0 z-40 transition-colors duration-300 ${
+        open ? 'border-b border-line bg-bg' : scrolled ? 'border-b border-line bg-bg/80 backdrop-blur-lg' : 'border-b border-transparent'
       }`}
     >
+      <span className="scroll-progress absolute inset-x-0 top-0 h-0.5 bg-accent" aria-hidden="true" />
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
         <a href="#inicio" className="whitespace-nowrap font-display text-lg font-bold text-fg">
           {PROFILE.name}

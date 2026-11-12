@@ -7,11 +7,8 @@ const dist = path.resolve('dist');
 const ssrDir = path.resolve('dist-ssr');
 const { render, structuredData } = await import(pathToFileURL(path.join(ssrDir, 'entry-server.js')).href);
 
-// Uma página por público: dados/Power BI (raiz) e criação de sites
-const PAGES = [
-  { file: 'index.html', page: 'home', root: '<div id="root"></div>' },
-  { file: 'criacao-de-sites/index.html', page: 'sites', root: '<div id="root" data-page="sites"></div>' },
-];
+// A criação de sites agora é um site separado (sites.dimas.space); aqui fica só a página inicial
+const PAGES = [{ file: 'index.html', page: 'home', root: '<div id="root"></div>' }];
 
 for (const { file: rel, page, root } of PAGES) {
   const file = path.join(dist, rel);

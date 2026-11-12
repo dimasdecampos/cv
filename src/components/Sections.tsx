@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Download, Printer } from 'lucide-react';
-import { EDUCATION, EXPERIENCE, FAQ, PROFILE, SERVICES, SKILLS, type Job } from '../data';
+import { EDUCATION, EXPERIENCE, FAQ, PROFILE, SERVICES, SITES_SITE, SKILLS, type Job } from '../data';
 import { formatDuration, formatMonth } from '../hooks';
 import { Section, btn } from './ui';
 
@@ -105,7 +105,7 @@ export function Services() {
           <h3 className="mb-4 text-xl font-semibold text-fg">Sites e aplicativos</h3>
           <ServiceList items={SERVICES.slice(6)} />
           <p className="no-print border-t border-line pt-5">
-            <a href="criacao-de-sites/" className="link font-semibold">
+            <a href={SITES_SITE} className="link font-semibold">
               Ver a página de criação de sites e apps
             </a>
           </p>

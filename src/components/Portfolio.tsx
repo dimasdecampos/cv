@@ -46,7 +46,7 @@ export function Portfolio() {
                   alt={`${p.title}: ${p.label}, projeto de Dimas de Campos`}
                   loading="lazy"
                   decoding="async"
-                  className="h-full w-full object-cover object-top"
+                  className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                 />
                 <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-md bg-fg px-2.5 py-1.5 text-xs font-semibold text-bg opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                   <Maximize2 className="h-3.5 w-3.5" />

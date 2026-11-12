@@ -14,6 +14,9 @@ export const PROFILE = {
   dataCareerStart: 2010,
 };
 
+/** Site separado de criação de sites e aplicativos. */
+export const SITES_SITE = 'https://sites.dimas.space/';
+
 export const SOCIAL = {
   linkedin: 'https://www.linkedin.com/in/dimasdecampos/',
   youtube: 'https://www.youtube.com/channel/UCFEAz5mNjnyMKjvlqAsamMg',
@@ -482,8 +485,18 @@ export const PROJECTS: Project[] = [
 
 // Sites, sistemas e aplicativos (seção "Sites & Apps" e página /criacao-de-sites/).
 // Imagens em public/projetos/dev/ (1280x800, .webp).
+export type DevCat = 'app' | 'site' | 'sistema';
+
+export const DEV_CATS: { id: 'all' | DevCat; label: string }[] = [
+  { id: 'all', label: 'Todos' },
+  { id: 'site', label: 'Sites' },
+  { id: 'app', label: 'Aplicativos' },
+  { id: 'sistema', label: 'Sistemas' },
+];
+
 export interface DevProject {
   id: string;
+  cat: DevCat;
   title: string;
   kind: string;
   image: string;
@@ -497,6 +510,7 @@ export interface DevProject {
 export const DEV_PROJECTS: DevProject[] = [
   {
     id: 'voando-perto',
+    cat: 'app',
     title: 'Voando Perto',
     kind: 'Aplicativo web (PWA) · Observação de aves',
     image: 'projetos/dev/voando.webp',
@@ -508,6 +522,7 @@ export const DEV_PROJECTS: DevProject[] = [
   },
   {
     id: 'monitor-rios',
+    cat: 'sistema',
     title: 'Monitor dos Rios',
     kind: 'Painel em tempo real · Dados públicos',
     image: 'projetos/dev/rios.webp',
@@ -519,6 +534,7 @@ export const DEV_PROJECTS: DevProject[] = [
   },
   {
     id: 'temaqui',
+    cat: 'sistema',
     title: 'TemAqui',
     kind: 'Marketplace local · Estilo OLX',
     image: 'projetos/dev/temaqui.webp',
@@ -530,6 +546,7 @@ export const DEV_PROJECTS: DevProject[] = [
   },
   {
     id: 'mause',
+    cat: 'app',
     title: 'Mause',
     kind: 'Aplicativo Android',
     image: 'projetos/dev/mause.webp',
@@ -541,6 +558,7 @@ export const DEV_PROJECTS: DevProject[] = [
   },
   {
     id: 'refugio',
+    cat: 'site',
     title: 'Refúgio Beira Rio',
     kind: 'Site institucional · Turismo',
     image: 'projetos/dev/refugio.webp',
@@ -552,6 +570,7 @@ export const DEV_PROJECTS: DevProject[] = [
   },
   {
     id: 'subettini-croche',
+    cat: 'site',
     title: 'Subettini Crochê',
     kind: 'Site vitrine · Artesanato',
     image: 'projetos/dev/croche.webp',
@@ -563,6 +582,7 @@ export const DEV_PROJECTS: DevProject[] = [
   },
   {
     id: 'estoura',
+    cat: 'app',
     title: 'Estoura',
     kind: 'Rede social · Comunidade',
     image: 'projetos/dev/estoura.webp',
@@ -574,6 +594,7 @@ export const DEV_PROJECTS: DevProject[] = [
   },
   {
     id: 'fotos',
+    cat: 'site',
     title: 'Galeria de Fotografia',
     kind: 'Site de portfólio · Fotografia',
     image: 'projetos/dev/fotos.webp',

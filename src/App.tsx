@@ -5,16 +5,14 @@ import { Hero } from './components/Hero';
 import { Photos } from './components/Photos';
 import { Portfolio } from './components/Portfolio';
 import { Experience, Faq, Services, Skills } from './components/Sections';
-import { SitesPage } from './components/SitesPage';
 import { btn } from './components/ui';
 import { MessageCircle } from 'lucide-react';
-import { PROFILE, SITES_NAV, SOCIAL, whatsappLink } from './data';
+import { PROFILE, SITES_SITE, SOCIAL, whatsappLink } from './data';
 import { useScrolled } from './hooks';
 
-export type Page = 'home' | 'sites';
+export type Page = 'home';
 
-export default function App({ page = 'home' }: { page?: Page }) {
-  const sites = page === 'sites';
+export default function App(_props: { page?: Page }) {
   const scrolled = useScrolled(500);
   return (
     <>
@@ -24,42 +22,32 @@ export default function App({ page = 'home' }: { page?: Page }) {
       >
         Pular para o conteúdo
       </a>
-      {sites ? (
-        <>
-          <Header nav={SITES_NAV} link={{ href: '../', label: 'Power BI e dados' }} />
-          <main id="conteudo">
-            <SitesPage />
-          </main>
-        </>
-      ) : (
-        <>
-          <Header link={{ href: 'criacao-de-sites/', label: 'Sites e apps' }} />
-          <main id="conteudo">
-            <Hero />
-            <Portfolio />
-            <DevProjects
-              aside={
-                <a href="criacao-de-sites/" className={`${btn.secondary} no-print shrink-0`}>
-                  Quero um site ou app
-                </a>
-              }
-            />
-            <Services />
-            <Experience />
-            <Skills />
-            <Photos />
-            <Faq />
-            <Contact
-              title="Vamos conversar sobre o seu projeto?"
-              intro="Painel novo, relatório lento, planilha que virou problema ou um site para a empresa: conte o que você precisa e eu respondo com os próximos passos."
-              whatsappText="Olá Dimas, gostaria de conversar sobre um projeto de Power BI."
-              origem="Contato pelo portfólio (dados / Power BI)"
-              placeholder="Ex.: dashboard de vendas em Power BI"
-              band
-            />
-          </main>
-        </>
-      )}
+      <Header link={{ href: SITES_SITE, label: 'Sites e apps' }} />
+      <main id="conteudo">
+        <Hero />
+        <Portfolio />
+        <DevProjects
+          moreHref={`${SITES_SITE}#projetos`}
+          aside={
+            <a href={SITES_SITE} className={`${btn.secondary} no-print shrink-0`}>
+              Quero um site ou app
+            </a>
+          }
+        />
+        <Services />
+        <Experience />
+        <Skills />
+        <Photos />
+        <Faq />
+        <Contact
+          title="Vamos conversar sobre o seu projeto?"
+          intro="Painel novo, relatório lento, planilha que virou problema ou um site para a empresa: conte o que você precisa e eu respondo com os próximos passos."
+          whatsappText="Olá Dimas, gostaria de conversar sobre um projeto de Power BI."
+          origem="Contato pelo portfólio (dados / Power BI)"
+          placeholder="Ex.: dashboard de vendas em Power BI"
+          band
+        />
+      </main>
       {/* No celular o botão do topo some: este acompanha a rolagem */}
       <a
         href={whatsappLink('Olá Dimas, vi seu site e gostaria de conversar.')}
@@ -78,8 +66,8 @@ export default function App({ page = 'home' }: { page?: Page }) {
             © {new Date().getFullYear()} {PROFILE.name}, São Paulo, SP
           </p>
           <nav className="no-print flex flex-wrap gap-x-5 gap-y-2" aria-label="Outros links">
-            <a href={sites ? '../' : 'criacao-de-sites/'} className="hover:text-fg">
-              {sites ? 'Power BI e dados' : 'Criação de sites e apps'}
+            <a href={SITES_SITE} className="hover:text-fg">
+              Criação de sites e apps
             </a>
             <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-fg">
               LinkedIn
