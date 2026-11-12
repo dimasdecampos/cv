@@ -38,7 +38,7 @@ export function Portfolio() {
       <p className={swipe.hint}>Deslize para o lado para ver os {visible.length} projetos. Toque para ampliar.</p>
       <ul key={filter} className={`${swipe.list} sm:grid-cols-2 lg:grid-cols-3`}>
         {visible.map((p, i) => (
-          <li key={p.id} className={swipe.item}>
+          <li key={p.id} className={`pop ${swipe.item}`} style={{ animationDelay: `${Math.min(i, 8) * 50}ms` }}>
             <button type="button" onClick={() => setOpenIndex(i)} className="group block w-full text-left">
               <span className="relative block aspect-[16/10] w-full overflow-hidden rounded-lg border border-line bg-bg">
                 <img

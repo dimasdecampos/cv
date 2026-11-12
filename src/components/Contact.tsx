@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { PROFILE, SOCIAL, whatsappLink } from '../data';
 import { ContactForm } from './ContactForm';
-import { Section } from './ui';
+import { Reveal, Section } from './ui';
 
 /** Contato: canais diretos à esquerda, formulário à direita. Usado nas duas páginas. */
 export function Contact({
@@ -33,7 +33,7 @@ export function Contact({
 
   return (
     <Section id="contato" title={title} intro={intro} band={band}>
-      <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[1fr_1.3fr]">
+      <Reveal className="grid gap-x-16 gap-y-12 lg:grid-cols-[1fr_1.3fr]">
         <dl>
           <div className="border-t border-line py-5">
             <dt className="text-sm text-subtle">WhatsApp, o jeito mais rápido</dt>
@@ -68,7 +68,7 @@ export function Contact({
           <h3 className="mb-5 text-xl font-semibold text-fg">Ou escreva por aqui</h3>
           <ContactForm origem={origem} placeholder={placeholder} />
         </div>
-      </div>
+      </Reveal>
     </Section>
   );
 }

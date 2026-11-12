@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { PHOTO_GALLERY, PHOTOS_START, type Photo } from '../data';
-import { Section, btn } from './ui';
+import { Reveal, Section, btn } from './ui';
 
 const COUNT = PHOTOS_START.length;
 const CAT_ALT: Record<string, string> = {
@@ -62,18 +62,18 @@ export function Photos() {
       }
     >
       <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {photos.map((p) => (
-          <li key={p.id} className="max-sm:last:hidden">
+        {photos.map((p, i) => (
+          <Reveal as="li" key={p.id} delay={(i % 3) * 90} className="max-sm:last:hidden">
             <a href={PHOTO_GALLERY} target="_blank" rel="noopener" className="block aspect-[3/2] overflow-hidden rounded-lg bg-band">
               <img
                 src={`${PHOTO_GALLERY}fotos/thumb/${p.id}.webp`}
                 alt={`${CAT_ALT[p.cat] ?? p.cat}, fotografia de Dimas de Campos`}
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-cover transition-opacity hover:opacity-85"
+                className="h-full w-full object-cover transition-transform duration-500 ease-out hover:scale-105"
               />
             </a>
-          </li>
+          </Reveal>
         ))}
       </ul>
     </Section>
